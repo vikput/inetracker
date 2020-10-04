@@ -1,0 +1,56 @@
+<%- include('../../layouts/header') %>
+<div class="sufee-login d-flex align-content-center flex-wrap">
+    <div class="container">
+        <div class="login-content">
+            <div class="login-logo">
+                <a href="index.html">
+                    <img class="align-content" src="/images/static_images/logo/logo.png" alt="">
+                </a>
+            </div>
+            <div class="login-form">
+                <form name="registration-form" id="registration-form" method="post">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" class="form-control" placeholder="User Name" name="username" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input type="text" class="form-control" placeholder="First Name" name="firstname" id="firstname">
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" class="form-control" placeholder="Last Name" name="lastname" id="lastname">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" placeholder="Confirm Password" name="confpassword" id="confpassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="select" class=" form-control-label">Security Question</label>
+                            <select name="securityquestion" id="securityquestion" class="form-control">
+                                <option value="">Please select</option>
+                                <% for(i=0; i<securityQuestions.length; i++){ %>
+                                    <option value="<%=securityQuestions[i].id %>"><%=securityQuestions[i].questions %></option>
+                                <% } %>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Answer</label>
+                        <input type="text" class="form-control" placeholder="Answer" name="securityanswer" id="securityanswer">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
+                    <div class="register-link m-t-15 text-center">
+                        <p>Already have account ? <a href="#"> Sign in</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../../layouts/footer') %>
+<script src="/js/validations/registration_validation.js"></script>

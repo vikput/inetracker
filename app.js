@@ -1,16 +1,27 @@
 //Node/Express packages
 const express = require('express')//Express module
+const bodyParser = require('body-parser');//BodyParser
 require('dotenv').config()//Read .env file properties
 
 const app = express()//Create instance of express class
 
 //Custom packages
 
-//Include routes
+
+//Set the view engine to ejs
+app.set('view engine', 'ejs');
+
+//Set path for static files
+app.use(express.static('public'));
+
+//Support parsing of application/json type post data
+app.use(bodyParser.json());
+
+//Support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//Include routes and register them in app context
 const routes = require('./routes/routes.js');
-
-
-//Register routes in app contex
 app.use('/', routes);
 
 
