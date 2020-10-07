@@ -1,6 +1,7 @@
 const commonService = require('../services/commonService')
 const registrationModel = require('../models/registrationModel')
 const passwordHash = require('password-hash');
+const configObj = require('../config/config')
 
 
 exports.index = function(req, res) {
@@ -32,7 +33,7 @@ save = function(postData, callback){
     ]
 
     registrationModel.saveUser(usersData, function(response){
-        if (response.data.insertId) {
+        if (response.status === configObj.success.status) {
             securityArray = [];
             securityArray[0] = response.data.insertId;
             for (let i = 0; i < securityData.length; i++) {
@@ -42,8 +43,10 @@ save = function(postData, callback){
             registrationModel.saveSecurityData(securityArray, function(response){
                 return callback(response);
             });
+        } else {
+            return callback(response);            
         }
-    })
+    });
 }
 
 exports.checkUsername = function(req, res) {
