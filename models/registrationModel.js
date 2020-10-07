@@ -24,6 +24,7 @@ exports.saveUser = function(usersData, callback){
         if (err) {
             response.status = configObj.error.status;
             response.message = configObj.error.err1_message;
+            //response.message = err;
             response.data = '';
             return callback(response);
         } else {
@@ -45,6 +46,7 @@ exports.saveSecurityData = function(securityData, callback){
         if (err) {
             response.status = configObj.error.status;
             response.message = configObj.error.err1_message;
+            //response.message = err;
             response.data = '';
             return callback(response)
         } else {
@@ -54,4 +56,5 @@ exports.saveSecurityData = function(securityData, callback){
             return callback(response)
         }
     });
+    conn.end();
 }
