@@ -8,7 +8,8 @@ exports.index = function(req, res) {
     registrationModel.getSecurityQuestions(function(securityQuestions){
         res.render('pages/register/register', {
             title : 'Registration',
-            securityQuestions: securityQuestions
+            securityQuestions: securityQuestions,
+            csrfToken : req.csrfToken()
         });
     });
 }

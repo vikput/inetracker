@@ -64,6 +64,7 @@ jQuery('#registration-form').validate({
                 jQuery.ajax({
                     url : '/save-user',
                     type : 'POST',
+                    headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
                     data : jQuery(form).serialize(),
                     success : function(response){
                         if (response.data.status === 'success') {
@@ -113,17 +114,18 @@ jQuery('#registration-form').validate({
 });
 
 checkUsername = function(username){
-    return new Promise(function(resolve, reject){
-        jQuery.ajax({
-            url : '/check-username',
-            type : 'POST',
-            data : {username : username},
-            success : function(response){
-                resolve(response);
-            },
-            error : function(error){
-                reject(error);
-            }
-        });
-    });
+  return new Promise(function(resolve, reject){
+      jQuery.ajax({
+          url : '/check-username',
+          type : 'POST',
+          headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
+          data : {username : username},
+          success : function(response){
+              resolve(response);
+          },
+          error : function(error){
+              reject(error);
+          }
+      });
+  });
 }
