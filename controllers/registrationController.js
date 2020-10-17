@@ -1,7 +1,7 @@
 const commonService = require('../services/commonService')
-const registrationModel = require('../models/registrationModel')
-const passwordHash = require('password-hash');
 const configObj = require('../config/config')
+const passwordHash = require('password-hash')
+const registrationModel = require('../models/registrationModel')
 
 
 exports.index = function(req, res) {
