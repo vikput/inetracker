@@ -24,3 +24,21 @@ exports.getCurrentDateTime = function(){
     +seconds         
     return datetime;
 }
+
+//Before login session check if users logs-out or closes tab and tries to access register/login page.
+exports.isNotActive = function(req, res, next) {
+    if (req.session.userData) {
+        res.redirect('/dashboard')
+    } else {
+        next();
+    }
+}
+
+//After login session check if users closes the tab and again tries to access after login pages.
+exports.isActive = function(req, res, next) {
+    if (!req.session.userData) {
+        res.redirect('/login')
+    } else {
+        next();
+    }
+}
