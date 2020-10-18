@@ -17,6 +17,10 @@ exports.authenticate = function(req, res) {
 		if (parseInt(response.data) === 1) {
 			loginModel.getUsersAuthDetails(userName, function(response){
 				if (passwordHash.verify(password, response.data[0].password)) {
+					req.session.userData = {
+						userid : response.data[0].id,
+						username : response.data[0].username
+					}
 					response.data = '/dashboard';
 					res.json(response);
 				} else {

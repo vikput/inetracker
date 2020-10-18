@@ -7,7 +7,7 @@ exports.getUsersAuthDetails = function(userName, callback) {
     let conn = dbObj.connect();
     conn.connect();
     let response = {};
-    let query = 'SELECT username, password FROM users WHERE username=?';
+    let query = 'SELECT id, username, password FROM users WHERE username=?';
 
     conn.query(query, userName, function(err, result){
     	if (err) {
