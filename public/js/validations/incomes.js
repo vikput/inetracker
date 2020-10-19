@@ -1,4 +1,3 @@
-console.log('income js')
 jQuery('#income-sources').validate({
     rules : {
         incomesource : {

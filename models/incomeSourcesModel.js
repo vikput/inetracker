@@ -3,7 +3,7 @@ const configObj = require('../config/config')
 
 exports.saveData = function(incomeSourceData){
 	return new Promise(function(resolve, reject){
-		let dbObj = new mysqldb();
+	    let dbObj = new mysqldb();
 	    let conn = dbObj.connect();
 	    let response = {};
 	    conn.connect();
