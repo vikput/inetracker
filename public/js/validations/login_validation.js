@@ -25,6 +25,12 @@ jQuery('#login-form').validate({
           type : 'POST',
           headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
           data : jQuery(form).serialize(),
+          beforeSend: function(){
+            jQuery('.loader').show()
+          },
+          complete: function(){
+            jQuery('.loader').hide();
+          },
           success : function(response){
             if (response.status === 'success') {
               jQuery("#login-form")[0].reset();

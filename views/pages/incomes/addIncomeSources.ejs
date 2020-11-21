@@ -29,7 +29,7 @@
             <form name="income-sources" id="income-sources" method="post">
                <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="csrf_token">
                <div class="form-group"><label for="income-source" class=" form-control-label">Income source</label><input type="text" id="income-source" name="incomesource" placeholder="Income source" class="form-control"></div>
-               <div class="form-group"><label for="annuall-income" class=" form-control-label">Annuall income</label><input type="text" id="annuall-income" name="annuallincome" placeholder="1000000" value="0" class="form-control"></div>
+               <div class="form-group"><label for="annuall-income" class=" form-control-label">Annuall income</label><input type="text" id="annuall-income" name="annuallincome" placeholder="10000000" value="0" class="form-control" maxlength="8"></div>
                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Save</button>
             </form>
             </div>
