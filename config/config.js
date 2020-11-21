@@ -10,7 +10,8 @@ let config = {
 		succ1_message : 'Your account got created successfully.',
 		succ2_message : 'Username is available.',
 		succ3_message : 'User got authenticated successfully.',
-		succ4_message : 'Your income source got added successfully.'
+		succ4_message : 'Your income source got added successfully.',
+		succ5_message : 'Your income data got added successfully.'
 	}
 }
 
