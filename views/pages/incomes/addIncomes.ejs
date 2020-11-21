@@ -51,7 +51,7 @@
                
                <div class="form-group"><label for="comments" class=" form-control-label">Comments</label><input type="text" id="comments" name="comments" placeholder="Enter comments" class="form-control"></div>
                
-               <div class="form-group"><label for="monthly-income" class=" form-control-label">Monthly income</label><input type="text" id="monthly-income" name="monthlyincome" placeholder="100000" value="0" maxlength="6" class="form-control"></div>
+               <div class="form-group"><label for="monthly-income" class=" form-control-label">Monthly income</label><input type="text" id="monthly-income" name="monthlyincome" placeholder="100000" value="0" maxlength="7" class="form-control"></div>
                
                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Save</button>
             </form>
@@ -79,5 +79,11 @@ jQuery(document).ready(function(){
       monthList += '<option value='+monthListArray[i]+'>'+monthListArray[i]+'</option>'
   }
   jQuery("#in-month").append(monthList);
+
+  //Date
+  jQuery('#in-date').datepicker({
+    format: 'yyyy-mm-dd',
+    startDate: '-3d'
+  });
 })
 </script>

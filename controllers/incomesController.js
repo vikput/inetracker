@@ -24,3 +24,28 @@ getUsersIncomeSources = async function(userId){
 		return Exception;
 	}
 }
+
+exports.save = async function(req, res){
+	userId = req.session.userData.userid;
+	response = await saveData(userId, req.body)
+	res.json({'data':response});
+}
+
+async function saveData(userId, postData){
+	try {
+		let data = [
+			userId,
+			parseInt(postData.incomesources),
+			postData.inyear,
+			postData.inmonth,
+			postData.indate,
+			postData.comments,
+			parseFloat(postData.monthlyincome)
+		]
+
+		response = await incService._saveIncomes(data)
+		return response;
+	} catch(Exception) {
+		return Exception;
+	}
+}
