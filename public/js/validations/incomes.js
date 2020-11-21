@@ -28,6 +28,12 @@ jQuery('#income-sources').validate({
           type : 'POST',
           headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
           data : jQuery(form).serialize(),
+          beforeSend: function(){
+            jQuery('.loader').show()
+          },
+          complete: function(){
+            jQuery('.loader').hide();
+          },
           success : function(response){
             if (response.data.status === 'success') {
               swal({
@@ -107,6 +113,12 @@ jQuery('#form-incomes').validate({
           type : 'POST',
           headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
           data : jQuery(form).serialize(),
+          beforeSend: function(){
+            jQuery('.loader').show()
+          },
+          complete: function(){
+            jQuery('.loader').hide();
+          },
           success : function(response){
             if (response.data.status === 'success') {
               swal({
