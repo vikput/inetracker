@@ -27,3 +27,16 @@ async function saveData(userId, postData){
 		return Exception;
 	}
 }
+
+exports.checkIncomeSource = async function(req, res){
+	try{
+		let data = [
+			req.session.userData.userid,
+			req.body.insource
+		]
+		response = await incService.checkIncomeSource(data);
+		res.json(response);
+	} catch(Exception) {
+		res.json(Exception)
+	}
+}

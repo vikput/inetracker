@@ -24,9 +24,12 @@ router.get('/dashboard', isActive.isActive, dashboard_controller.index)
 router.get('/dashboard/test', isActive.isActive, dashboard_controller.test)
 router.get('/logout', dashboard_controller.logout)
 
-//Income modules routes
+//Income sources modules routes
 router.get('/income/add-income-sources', isActive.isActive, income_sources_controller.index)
 router.post('/income/save-income-sources', income_sources_controller.save)
+router.post('/income/check-income-sources', income_sources_controller.checkIncomeSource)
+
+//Income modules routes
 router.get('/income/add-incomes', isActive.isActive, incomes_controller.index)
 router.post('/income/save-incomes', isActive.isActive, incomes_controller.save)
 

@@ -46,3 +46,33 @@ exports.getUsersIncomeSources = function(data){
 	    conn.end();
 	});
 }
+
+exports.checkIncomeSource = function(data){
+	return new Promise(function(resolve, reject){
+		let dbObj = new mysqldb();
+        let conn = dbObj.connect();
+        conn.connect();
+        let response = {};
+        let query = 'SELECT COUNT(id) as incs_count FROM users_income_sources WHERE user_id=? AND users_income_sources LIKE N?';
+        conn.query(query, data, function(err, result){
+        	if (err) {
+                response.status = configObj.error.status;
+	            response.message = configObj.error.err1_message;
+	            //response.message = err;
+	            response.data = '';
+	            reject(response);
+        	} else {
+        		response.status = configObj.success.status;
+	            if (result[0].incs_count > 0) {
+	            	response.message = configObj.error.err4_message;	
+	            } else {
+	            	response.message = '';
+	            }
+
+                response.data = result[0].incs_count;
+                resolve(response);
+        	}
+        });
+        conn.end();
+	});
+}
