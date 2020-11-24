@@ -36,7 +36,7 @@ app.use(function (err, req, res, next) {
   if (err.code !== 'EBADCSRFTOKEN') return next(err)
   // handle CSRF token errors here
   res.status(403);
-  res.send('Someone tried to tampered your form data.');
+  res.send('There was some issue with this request, please refresh the page and try again.');
 });
 
 //Include routes and register them in app context

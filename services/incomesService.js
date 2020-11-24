@@ -16,6 +16,13 @@ exports.getUsersIncomeSources = async function(data){
 }
 
 /*
+	Check if income source is already exists
+*/
+exports.checkIncomeSource = async function(data){
+	return await incSModel.checkIncomeSource(data)
+}
+
+/*
 	Save users incomes data 
 */
 exports._saveIncomes = async function(data){

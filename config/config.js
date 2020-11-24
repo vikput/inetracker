@@ -3,7 +3,8 @@ let config = {
 		status : 'error',
 		err1_message : 'Something went wrong, please try again later.',
 		err2_message : 'Username is already in use.',
-		err3_message : 'Username or password is in-correct.'
+		err3_message : 'Username or password is in-correct.',
+		err4_message : 'Income source is already added by you.'
 	},
 	success : {
 		status : 'success',
