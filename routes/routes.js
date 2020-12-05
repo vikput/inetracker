@@ -8,6 +8,7 @@ const login_controller = require('../controllers/loginController');
 const dashboard_controller = require('../controllers/dashboardController');
 const income_sources_controller = require('../controllers/incomeSourcesController');
 const incomes_controller = require('../controllers/incomesController');
+const expenses_controller = require('../controllers/expensesController');
 
 
 //Registration routes
@@ -32,5 +33,9 @@ router.post('/income/check-income-sources', income_sources_controller.checkIncom
 //Income modules routes
 router.get('/income/add-incomes', isActive.isActive, incomes_controller.index)
 router.post('/income/save-incomes', isActive.isActive, incomes_controller.save)
+
+//Expenses modules routes
+router.get('/expense/add-expenses', isActive.isActive, expenses_controller.index)
+router.post('/expense/save-expenses', isActive.isActive, expenses_controller.save)
 
 module.exports = router;
