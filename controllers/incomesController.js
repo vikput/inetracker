@@ -49,3 +49,38 @@ async function saveData(userId, postData){
 		return Exception;
 	}
 }
+
+exports.view = async function(req, res){
+  res.render('pages/incomes/viewIncomes', {
+    title : 'Incomes',
+    username : req.session.userData.username,
+    csrfToken : req.csrfToken()
+  });
+}
+
+exports.fetchIncomes = async function(req, res){
+    userId = req.session.userData.userid;
+    data = await fetchUsersIncomes(userId);
+    let recordsTotal = await incService.getUsersTotalIncCount([userId]);
+    console.log(recordsTotal);
+    let recordsFiltered = data.length;
+    let response = {
+      "draw": req.query.draw,
+      "recordsTotal": parseInt(recordsTotal),
+      "recordsFiltered": parseInt(recordsFiltered),
+      "data": data
+    };
+  res.json(response);
+}
+
+fetchUsersIncomes = async function (userid){
+  try {
+        let data = [
+          userid
+      ];
+
+      return await incService.fetchUsersIncomes(data);
+  } catch(Exception) {
+        return Exception;
+  }
+}

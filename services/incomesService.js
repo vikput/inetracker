@@ -51,3 +51,31 @@ exports.getUsersTotalIncScount = async function(data){
 exports._saveIncomes = async function(data){
 	return await incModel.saveIncomes(data);
 }
+
+/**
+   Get total records count
+*/
+exports.getUsersTotalIncCount = async function(data){
+    results =  await incModel.getUsersTotalIncCount(data);
+    return results.data;
+}
+
+/**
+    Fetch users monthly income data
+*/
+exports.fetchUsersIncomes = async function(data){
+    results = await incModel.fetchUsersIncomes(data);
+    incomes = [];
+    for (let i=0; i<results.length; i++){
+        incomes.push({
+            'year': results[i].year,
+            'month': results[i].month,
+            'date': results[i].in_date,
+            'amount': results[i].amount,
+            'comments': results[i].comments,
+            'action': 'Action'
+        });
+    }
+
+    return incomes;
+}

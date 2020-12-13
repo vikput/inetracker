@@ -35,6 +35,8 @@ router.get('/income/fetch-income-sources', isActive.isActive, income_sources_con
 //Income modules routes
 router.get('/income/add-incomes', isActive.isActive, incomes_controller.index)
 router.post('/income/save-incomes', isActive.isActive, incomes_controller.save)
+router.get('/income/view-incomes', isActive.isActive, incomes_controller.view)
+router.get('/income/fetch-incomes', isActive.isActive, incomes_controller.fetchIncomes)
 
 //Expenses modules routes
 router.get('/expense/add-expenses', isActive.isActive, expenses_controller.index)
