@@ -47,6 +47,42 @@ exports.getUsersIncomeSources = function(data){
 	});
 }
 
+exports.getUsersIncomeSourcesListView = function(data, start, limit, search, sortBy, orderBy){
+	return new Promise(function(resolve, reject){
+	    let dbObj = new mysqldb();
+        let conn = dbObj.connect();
+        conn.connect();
+		let orderByArray = ['users_income_sources'];
+        let response = {};
+        let query = 'SELECT id, users_income_sources FROM users_income_sources WHERE user_id=?';
+        if (search.length > 0) {
+        	for(let i=0; i<search.length; i++){
+        	    for (let value of Object.values(search[i])) {
+                   data.push(value);
+                }
+                for (let key of Object.keys(search[i])) {
+                    query +=' AND '+key+' LIKE '+conn.escape('%'+data[1]+'%')+'';
+                }
+        	}
+        }
+
+        query += ' ORDER BY '+orderByArray[sortBy]+' '+orderBy;
+        //query += ' LIMIT '+limit+','+start; 
+	    conn.query(query, data, function(err, result){
+	    	if (err) {
+	    		response.status = configObj.error.status;
+	            response.message = configObj.error.err1_message;
+	            //response.message = err;
+	            response.data = '';
+	            reject(response);
+	    	} else {
+	    		resolve(result);
+	    	}
+	    });
+	    conn.end();
+	});
+}
+
 exports.checkIncomeSource = function(data){
 	return new Promise(function(resolve, reject){
 		let dbObj = new mysqldb();
@@ -69,6 +105,31 @@ exports.checkIncomeSource = function(data){
 	            	response.message = '';
 	            }
 
+                response.data = result[0].incs_count;
+                resolve(response);
+        	}
+        });
+        conn.end();
+	});
+}
+
+exports.getUsersTotalIncScount = function(data){
+	return new Promise(function(resolve, reject){
+		let dbObj = new mysqldb();
+        let conn = dbObj.connect();
+        conn.connect();
+        let response = {};
+        let query = 'SELECT COUNT(id) as incs_count FROM users_income_sources WHERE user_id=?';
+        conn.query(query, data, function(err, result){
+        	if (err) {
+                response.status = configObj.error.status;
+	            response.message = configObj.error.err1_message;
+	            //response.message = err;
+	            response.data = '';
+	            reject(response);
+        	} else {
+        		response.status = configObj.success.status;
+                response.message = '';
                 response.data = result[0].incs_count;
                 resolve(response);
         	}

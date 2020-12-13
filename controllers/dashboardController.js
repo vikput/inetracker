@@ -3,7 +3,8 @@
 exports.index = function(req, res) {
     res.render('pages/dashboard/dashboard', {
         title : 'Dashboard',
-        username : req.session.userData.username
+        username : req.session.userData.username,
+        csrfToken : req.csrfToken()
     });
 }
 

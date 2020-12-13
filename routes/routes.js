@@ -29,6 +29,8 @@ router.get('/logout', dashboard_controller.logout)
 router.get('/income/add-income-sources', isActive.isActive, income_sources_controller.index)
 router.post('/income/save-income-sources', income_sources_controller.save)
 router.post('/income/check-income-sources', income_sources_controller.checkIncomeSource)
+router.get('/income/view-income-sources', isActive.isActive, income_sources_controller.view)
+router.get('/income/fetch-income-sources', isActive.isActive, income_sources_controller.fetchIncomeSources)
 
 //Income modules routes
 router.get('/income/add-incomes', isActive.isActive, incomes_controller.index)
