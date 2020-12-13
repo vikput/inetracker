@@ -50,15 +50,12 @@ exports.view = async function(req, res){
 }
 
 exports.fetchIncomeSources = async function(req, res){
-	console.log(req.query);
-	let userId = req.session.userData.userid;
+    let userId = req.session.userData.userid;
 	let start = req.query.start;
 	let limit = req.query.length;
 	let sortBy = req.query.order[0].column;
 	let orderBy = req.query.order[0].dir;
-	console.log(sortBy);
-	console.log(orderBy);
-	let columns = req.query.columns;
+    let columns = req.query.columns;
 	let search = [];
 
 	columns.forEach(function(value, key){
@@ -90,7 +87,6 @@ getUsersIncomeSourcesListView = async function(userId, start, limit, search, sor
 		response = await incService.getUsersIncomeSourcesListView(data, start, limit, search, sortBy, orderBy);
 	    return response;
 	}catch (Exception){
-		console.log(Exception);
-		return Exception;
+        return Exception;
 	}
 }
