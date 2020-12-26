@@ -42,9 +42,9 @@ async function saveData(userId, postData){
 			postData.exdate,
 			postData.comments,
 			parseFloat(postData.monthlyexpense)
-		]
-        console.log('controller')
-		response = await expService._saveData(data)
+		];
+
+		response = await expService._saveData(data);
 		return response;
 	} catch(Exception) {
 		return Exception;
@@ -64,7 +64,6 @@ exports.fetchExpenses = async function(req, res){
     let start = req.query.start;
 	let limit = req.query.length;
 	let orderBy = req.query.order;
-    console.log(orderBy.length)
     let sortByArr = [];let orderByArr = [];
 	for(let i=0; i<orderBy.length; i++){
         sortByArr.push(orderBy[i].column);

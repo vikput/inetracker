@@ -60,9 +60,17 @@ exports.view = async function(req, res){
 
 exports.fetchIncomes = async function(req, res){
     userId = req.session.userData.userid;
-    data = await fetchUsersIncomes(userId);
+    let start = req.query.start;
+	let limit = req.query.length;
+	let orderBy = req.query.order;
+    let sortByArr = [];let orderByArr = [];
+	for(let i=0; i<orderBy.length; i++){
+        sortByArr.push(orderBy[i].column);
+        orderByArr.push(orderBy[i].dir);
+	}
+
+    data = await fetchUsersIncomes(userId, start, limit, sortByArr, orderByArr);
     let recordsTotal = await incService.getUsersTotalIncCount([userId]);
-    console.log(recordsTotal);
     let recordsFiltered = data.length;
     let response = {
       "draw": req.query.draw,
@@ -73,13 +81,13 @@ exports.fetchIncomes = async function(req, res){
   res.json(response);
 }
 
-fetchUsersIncomes = async function (userid){
+fetchUsersIncomes = async function (userid, start, limit, sortByArr, orderByArr){
   try {
         let data = [
           userid
       ];
 
-      return await incService.fetchUsersIncomes(data);
+      return await incService.fetchUsersIncomes(data, start, limit, sortByArr, orderByArr);
   } catch(Exception) {
         return Exception;
   }
