@@ -63,8 +63,8 @@ exports.getUsersTotalIncCount = async function(data){
 /**
     Fetch users monthly income data
 */
-exports.fetchUsersIncomes = async function(data){
-    results = await incModel.fetchUsersIncomes(data);
+exports.fetchUsersIncomes = async function(data, start, limit, sortByArr, orderByArr){
+    results = await incModel.fetchUsersIncomes(data, start, limit, sortByArr, orderByArr);
     incomes = [];
     for (let i=0; i<results.length; i++){
         incomes.push({
