@@ -1,4 +1,4 @@
-const commonModel = require('../models/commonModel')
+const commonModel = require('../models/commonModel');
 
 
 exports.checkUsername = function(userId=null, username, callback) {

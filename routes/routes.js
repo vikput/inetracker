@@ -9,6 +9,7 @@ const dashboard_controller = require('../controllers/dashboardController');
 const income_sources_controller = require('../controllers/incomeSourcesController');
 const incomes_controller = require('../controllers/incomesController');
 const expenses_controller = require('../controllers/expensesController');
+const reports_controller = require('../controllers/reportsController');
 
 
 //Registration routes
@@ -43,5 +44,11 @@ router.get('/expense/add-expenses', isActive.isActive, expenses_controller.index
 router.post('/expense/save-expenses', isActive.isActive, expenses_controller.save);
 router.get('/expense/view-expenses', isActive.isActive, expenses_controller.view);
 router.get('/expense/fetch-expenses', isActive.isActive, expenses_controller.fetchExpenses);
+
+//Reports modules routes
+//router.get('/report/incomes-reports', isActive.isActive, reports_controller.incomesReports);
+//router.get('/report/expenses-reports', isActive.isActive, reports_controller.expensesReports);
+router.get('/report/detailed-reports', isActive.isActive, reports_controller.detailedReports);
+router.post('/report/fetch-detailed-reports', isActive.isActive, reports_controller.fetchDetailedReports);
 
 module.exports = router;

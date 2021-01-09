@@ -1,0 +1,81 @@
+<%- include('../../layouts/header') %>
+<%- include('../../layouts/left_panel') %>
+<%- include('../../layouts/right_panel') %>
+<div class="content mt-3">
+   <div class="animated fadeIn">
+      <div class="col-lg-12">
+         <div class="card">
+            <div class="card-header"><strong>Detailed</strong><small> report</small></div>
+            <div class="card-body card-block">
+            <form name="reports" id="reports" method="post">
+               <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="csrf_token">
+
+               <div class="row">
+             	  <div class="form-group col-sm-3"><label for="year" class=" form-control-label">Year</label>
+                  <select name="year" id="year" class="form-control">
+                  </select>
+                </div>
+
+                <div class="form-group col-sm-3"><label for="month" class=" form-control-label">Month</label>
+                  <select name="month" id="month" class="form-control">
+                  </select>
+                </div>
+
+                <div class="form-group col-sm-3"><label for="from-date" class=" form-control-label">From date</label>
+                  <input type="text" id="from-date" name="fromdate" placeholder="0000-00-00" class="form-control">
+                </div>
+
+                <div class="form-group col-sm-3"><label for="to-date" class=" form-control-label">To date</label>
+                  <input type="text" id="to-date" name="todate" placeholder="0000-00-00" class="form-control">
+                </div>
+               </div>
+               <div class="row">
+                <div class="form-group col-sm-6"><label for="income-sources" class=" form-control-label">Income sources</label>
+                  <select name="incomesources" id="income-sources" class="form-control">
+                     <option value="">Please select</option>
+                     <% for(i=0; i<incomeSources.length; i++){ %>
+                        <option value="<%=incomeSources[i].id %>"><%=incomeSources[i].users_income_sources %></option>
+                     <% } %>
+                  </select>
+                </div>
+                <div class="form-group col-sm-6"></div>
+               </div>
+               <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" id="submit">Submit</button>
+            </form>
+            </div>
+         </div>
+         <div class="reposts-response"></div>
+      </div>
+   </div>
+</div>
+<%- include('../../layouts/footer') %>
+<script src="/js/validations/reports.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+  //YearList
+  let yearListArray = commonObj.yearList();
+  let yearList = '<option value="">Please select</option>'
+  for(let i=0; i<yearListArray.length; i++) {
+      yearList += '<option value='+yearListArray[i]+'>'+yearListArray[i]+'</option>'
+  }
+  jQuery("#year").append(yearList);
+
+  //MonthList
+  let monthListArray = commonObj.monthList();
+  let monthList = '<option value="">Please select</option>'
+  for(let i=0; i<monthListArray.length; i++) {
+      monthList += '<option value='+monthListArray[i]+'>'+monthListArray[i]+'</option>'
+  }
+  jQuery("#month").append(monthList);
+
+  //From-date
+  jQuery('#from-date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+
+  //To-date
+  jQuery('#to-date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+});
+</script>
