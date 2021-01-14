@@ -39,15 +39,14 @@ exports.fetchDetailedReports = async function(req, res){
 	userId = req.session.userData.userid;
      
     let response = await getDetailedReports(userId, filterData);
+    console.log(response);
 
-    res.render('pages/reports/partials/reportsAjaxResponse');
-
-    /*let response = {
-    	'data': view 
-    };*/
-	//res.json('pages/reports/partials/reportsAjaxResponse');
+    res.render('pages/reports/partials/reportsAjaxResponse', {
+    	title: 'Reports',
+    	reportsData: response
+    });
 }
 
 getDetailedReports = async function(userId, filterData){
-    await reportService.getDetailedReports(userId, filterData);
+    return await reportService.getDetailedReports(userId, filterData);
 }

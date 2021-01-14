@@ -10,10 +10,20 @@ jQuery('#submit').click(function(){
     	data.year = year;
     	data.month = month;
     } else if (year && !month) {
-    	alert('Please select month.');
+    	swal({
+            title: 'Error!',
+            text: 'PLease select month.',
+            icon: 'error',
+            button: 'Ok'
+        });
     	return false;
     } else if(!year && month) {
-        alert('Please select year.');
+        swal({
+            title: 'Error!',
+            text: 'PLease select year.',
+            icon: 'error',
+            button: 'Ok'
+        });
         return false;
     } 
 
@@ -22,7 +32,12 @@ jQuery('#submit').click(function(){
     		data.fromDate = fromDate;
     		data.toDate = toDate;
     	} else {
-    		alert('From date should be less than To date.');
+            swal({
+                title: 'Error!',
+                text: 'From date should be less then To date.',
+                icon: 'error',
+                button: 'Ok'
+            });
     		return false;
     	}
     }
@@ -30,7 +45,12 @@ jQuery('#submit').click(function(){
     if (inCsrc) {
         data.inCsrc = inCsrc;
     } else {
-    	alert('Please select income source.');
+    	swal({
+            title: 'Error!',
+            text: 'PLease select income sources.',
+            icon: 'error',
+            button: 'Ok'
+        });
         return false;
     }
      
@@ -47,11 +67,15 @@ jQuery('#submit').click(function(){
           jQuery('.loader').hide();
         },
         success: function(response){
-          console.log(response);
           jQuery('.reposts-response').html(response);
         },
         error: function(error){
-          console.log(error);
+            swal({
+                title: 'Error!',
+                text: response.data.message,
+                icon: response.data.status,
+                button: 'Ok'
+            });
         }
     })
 
