@@ -48,6 +48,12 @@ let commonObj = {
 
     today = yyyy + '-' + mm + '-' + dd;
     return today;
-  }
+  },
+
+  datepickerCurrentDate: function(){
+    let date = new Date();
+    let today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return today;
+  } 
 }
 

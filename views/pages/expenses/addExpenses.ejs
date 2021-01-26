@@ -31,7 +31,7 @@
                <div class="form-group"><label for="income-sources" class=" form-control-label">Income sources</label>
                   <select name="incomesources" id="income-sources" class="form-control">
                      <option value="">Please select</option>
-                     <option value="101">All</option>
+                     <!--<option value="101">All</option>-->
                      <% for(i=0; i<incomeSources.length; i++){ %>
                         <option value="<%=incomeSources[i].id %>"><%=incomeSources[i].users_income_sources %></option>
                      <% } %>
@@ -92,9 +92,13 @@ jQuery(document).ready(function(){
   jQuery("#ex-month").append(monthList);
 
   //Date
+  let today = commonObj.datepickerCurrentDate();
   jQuery('#ex-date').datepicker({
     format: 'yyyy-mm-dd',
-    startDate: '-3d'
+    startDate: today,
+    todayHighlight: true,
+    autoclose: true
   });
+  jQuery('#ex-date').datepicker('setDate', today);
 })
 </script>

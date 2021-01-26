@@ -25,6 +25,18 @@ exports.getCurrentDateTime = function(){
     return datetime;
 }
 
+exports.formatDate = function(date) {
+    let dateObj = new Date(date),
+        month = '' + (dateObj.getMonth() + 1),
+        day = '' + dateObj.getDate(),
+        year = dateObj.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 //Before login session check if users logs-out or closes tab and tries to access register/login page.
 exports.isNotActive = function(req, res, next) {
     if (req.session.userData) {
@@ -41,4 +53,8 @@ exports.isActive = function(req, res, next) {
     } else {
         next();
     }
+}
+
+exports.currencySymbol = function(amount) {
+ return "<span>&#x20B9<span>"+amount;
 }

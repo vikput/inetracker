@@ -1,5 +1,6 @@
 const incSModel = require('../models/incomeSourcesModel');
 const incModel = require('../models/incomesModel');
+const commonService = require('./commonService');
 
 /*
 	Save users income sources data 
@@ -70,8 +71,8 @@ exports.fetchUsersIncomes = async function(data, start, limit, sortByArr, orderB
         incomes.push({
             'year': results[i].year,
             'month': results[i].month,
-            'date': results[i].in_date,
-            'amount': results[i].amount,
+            'date': commonService.formatDate(results[i].in_date),
+            'amount': commonService.currencySymbol(results[i].amount),
             'comments': results[i].comments,
             'action': 'Action'
         });

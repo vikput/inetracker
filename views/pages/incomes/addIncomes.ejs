@@ -91,9 +91,14 @@ jQuery(document).ready(function(){
   jQuery("#in-month").append(monthList);
 
   //Date
+  let today = commonObj.datepickerCurrentDate();
   jQuery('#in-date').datepicker({
     format: 'yyyy-mm-dd',
-    startDate: '-3d'
+    startDate: today,
+    todayHighlight: true,
+    autoclose: true
   });
+  jQuery('#in-date').datepicker('setDate', today);
+
 })
 </script>
