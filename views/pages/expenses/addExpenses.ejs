@@ -31,7 +31,7 @@
                <div class="form-group"><label for="income-sources" class=" form-control-label">Income sources</label>
                   <select name="incomesources" id="income-sources" class="form-control">
                      <option value="">Please select</option>
-                     <option value="101">All</option>
+                     <!--<option value="101">All</option>-->
                      <% for(i=0; i<incomeSources.length; i++){ %>
                         <option value="<%=incomeSources[i].id %>"><%=incomeSources[i].users_income_sources %></option>
                      <% } %>
@@ -66,25 +66,39 @@
 <script type="text/javascript">
 jQuery(document).ready(function(){
   //YearList
+  let currentYear = commonObj.currentYear();
   let yearListArray = commonObj.yearList();
-  let yearList = '<option value="">PLease select</option>'
+  let yearList = '<option value="">Please select</option>'
   for(let i=0; i<yearListArray.length; i++) {
+    if (yearListArray[i] === currentYear) {
+      yearList += '<option value='+yearListArray[i]+' selected="selected">'+yearListArray[i]+'</option>';
+    } else {
       yearList += '<option value='+yearListArray[i]+'>'+yearListArray[i]+'</option>'
+    }
   }
   jQuery("#ex-year").append(yearList);
 
   //MonthList
+  let currentMonth = commonObj.currentMonth();
   let monthListArray = commonObj.monthList();
-  let monthList = '<option value="">PLease select</option>'
+  let monthList = '<option value="">Please select</option>'
   for(let i=0; i<monthListArray.length; i++) {
-      monthList += '<option value='+monthListArray[i]+'>'+monthListArray[i]+'</option>'
+    if (monthListArray[i] === currentMonth) {
+      monthList += '<option value='+monthListArray[i]+' selected="selected">'+monthListArray[i]+'</option>';
+    } else {
+      monthList += '<option value='+monthListArray[i]+'>'+monthListArray[i]+'</option>';
+    }
   }
   jQuery("#ex-month").append(monthList);
 
   //Date
+  let today = commonObj.datepickerCurrentDate();
   jQuery('#ex-date').datepicker({
     format: 'yyyy-mm-dd',
-    startDate: '-3d'
+    startDate: today,
+    todayHighlight: true,
+    autoclose: true
   });
+  jQuery('#ex-date').datepicker('setDate', today);
 })
 </script>

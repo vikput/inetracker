@@ -10,7 +10,7 @@ exports.index = async function(req, res){
 		username : req.session.userData.username,
 		csrfToken : req.csrfToken(),
 		incomeSources : response
-	})
+	});
 }
 
 getUsersIncomeSources = async function(userId){
