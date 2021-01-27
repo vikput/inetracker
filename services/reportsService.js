@@ -9,37 +9,49 @@ exports.getDetailedReports = async function(userId, filterData){
         usersExpenses = await reportsModel.getExpenses(userId, filterData);
         
         reportData = [];
+
+        let grandTotal = 0;
         for (let i=0; i<usersIncomes.length; i++) {
-        	console.log(usersIncomes[i].year+'-'+usersIncomes[i].month+'-'+usersIncomes[i].in_date+'-'+usersIncomes[i].amount);
+            let balance = 0;
         	let expenses = [];
+	        let totalExpenses = 0;
         	for (let j=0; j<usersExpenses.length; j++) {
                 if (usersIncomes[i].year === usersExpenses[j].year && usersIncomes[i].month === usersExpenses[j].month && usersIncomes[i].income_sources === usersExpenses[j].income_sources) {
-	                expenses.push({
+                    totalExpenses += parseFloat(usersExpenses[j].amount);
+                    expenses.push({
 	                	'ex_type': 'Expenses',
 	                    'ex_year': usersExpenses[j].year,
 	        	        'ex_month': usersExpenses[j].month,
 	        	        'ex_date': commonService.formatDate(usersExpenses[j].ex_date),
 	        	        'ex_amount': parseFloat(usersExpenses[j].amount),
 	        	        'ex_comments': usersExpenses[j].comments 
-	                });	
+	                });
+
                }
         	}
-    	    reportData.push({
+            
+            balance = parseFloat(usersIncomes[i].amount) - parseFloat(totalExpenses);
+            balance = balance > 0 ? balance : 0;
+            grandTotal += balance; 	
+            reportData.push({
     	    	'in_type': 'Income',
                 'in_year': usersIncomes[i].year,
     	        'in_month': usersIncomes[i].month,
     	        'in_date': commonService.formatDate(usersIncomes[i].in_date),
     	        'amount': parseFloat(usersIncomes[i].amount),
     	        'comments': usersIncomes[i].comments,
-    	        'expenses': expenses 
+    	        'expenses': expenses,
+                'balance': balance 
            });
         }
-        
+
         response = {
         	status: 'success',
         	message: '',
-        	data: reportData
+        	data: reportData,
+            total: grandTotal
         };
+
         return response;
 	} catch(Exception){
 		response = {

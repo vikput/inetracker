@@ -63,6 +63,46 @@
 			        </div>    
 			    <% } %>
 		    </div>
+		    <div class="row">
+		    	<div class="form-group col-sm-2 border-bottom border-dark">
+			        <%= '-'%>
+			    </div>
+			    <div class="form-group col-sm-2 border-bottom border-dark">
+			        <%= '-'%>
+			    </div>
+			    <div class="form-group col-sm-2 border-bottom border-dark">
+			        <%= '-'%>
+			    </div>
+		    	<div class="form-group col-sm-2 border-bottom border-dark">
+			        <%= 'Balance'%>
+			    </div>
+			    <div class="form-group col-sm-2 border-bottom border-dark">
+			        <span>&#8377;</span><%= reportsData.data[i].balance%>
+			    </div>
+			    <div class="form-group col-sm-2 border-bottom border-dark">
+			        <%= '-'%>
+			    </div>
+		    </div>
 	    <% } %>
+	    <div class="row">
+	    	<div class="form-group col-sm-2 border-bottom border-dark">
+		        <%= '-'%>
+		    </div>
+		    <div class="form-group col-sm-2 border-bottom border-dark">
+		        <%= '-'%>
+		    </div>
+		    <div class="form-group col-sm-2 border-bottom border-dark">
+		        <%= '-'%>
+		    </div>
+	    	<div class="form-group col-sm-2 border-bottom border-dark">
+		        <%= 'Total Balance'%>
+		    </div>
+		    <div class="form-group col-sm-2 border-bottom border-dark">
+		        <span>&#8377;</span><%= reportsData.total%>
+		    </div>
+		    <div class="form-group col-sm-2 border-bottom border-dark">
+		        <%= '-'%>
+		    </div>
+	    </div>
 	</div>
 </div>
