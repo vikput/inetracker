@@ -58,3 +58,16 @@ exports.isActive = function(req, res, next) {
 exports.currencySymbol = function(amount) {
  return "<span>&#x20B9<span>"+amount;
 }
+
+//Escape html and script tags in javascript
+exports.escapeHtml = function (text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}

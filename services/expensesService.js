@@ -26,7 +26,7 @@ exports.fetchUsersExpenses = async function(data, start, limit, sortByArr, order
             'month': results[i].month,
             'date': commonService.formatDate(results[i].date),
             'amount': commonService.currencySymbol(results[i].amount),
-            'comments': results[i].comments,
+            'comments': commonService.escapeHtml(results[i].comments),
             'action': 'Action'
         });
     }
