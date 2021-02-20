@@ -31,7 +31,7 @@ exports.getUsersIncomeSourcesListView = async function(data, start, limit, searc
     incSourceData = [];
     for(let i=0; i<results.length; i++){
     	incSourceData.push({
-    		'income_sources': results[i].users_income_sources,
+    		'income_sources': commonService.escapeHtml(results[i].users_income_sources),
     		'action': 'Action'
     	}); 
     }
