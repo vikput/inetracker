@@ -73,7 +73,7 @@ exports.fetchUsersIncomes = async function(data, start, limit, sortByArr, orderB
             'month': results[i].month,
             'date': commonService.formatDate(results[i].in_date),
             'amount': commonService.currencySymbol(results[i].amount),
-            'comments': results[i].comments,
+            'comments': commonService.escapeHtml(results[i].comments),
             'action': 'Action'
         });
     }
