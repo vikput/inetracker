@@ -3,24 +3,24 @@ const incModel = require('../models/incomesModel');
 const commonService = require('./commonService');
 
 /*
-	Save users income sources data 
+    Save users income sources data 
 */
 exports._saveData = async function(data){
-	return await incSModel.saveData(data);
+    return await incSModel.saveData(data);
 }
 
 /*
-	Get users income sources
+    Get users income sources
 */
 exports.getUsersIncomeSources = async function(data){
-	return await incSModel.getUsersIncomeSources(data);
+    return await incSModel.getUsersIncomeSources(data);
 }
 
 /*
-	Check if income source is already exists
+    Check if income source is already exists
 */
 exports.checkIncomeSource = async function(data){
-	return await incSModel.checkIncomeSource(data);
+    return await incSModel.checkIncomeSource(data);
 }
 
 /**
@@ -30,10 +30,10 @@ exports.getUsersIncomeSourcesListView = async function(data, start, limit, searc
     results = await incSModel.getUsersIncomeSourcesListView(data, start, limit, search, sortBy, orderBy);
     incSourceData = [];
     for(let i=0; i<results.length; i++){
-    	incSourceData.push({
-    		'income_sources': results[i].users_income_sources,
-    		'action': 'Action'
-    	}); 
+        incSourceData.push({
+            'income_sources': commonService.escapeHtml(results[i].users_income_sources),
+            'action': 'Action'
+        }); 
     }
     return incSourceData;
 }
@@ -42,15 +42,15 @@ exports.getUsersIncomeSourcesListView = async function(data, start, limit, searc
    Get total records count
 */
 exports.getUsersTotalIncScount = async function(data){
-	results =  await incSModel.getUsersTotalIncScount(data);
-	return results.data;
+    results =  await incSModel.getUsersTotalIncScount(data);
+    return results.data;
 }
 
 /*
-	Save users incomes data 
+    Save users incomes data 
 */
 exports._saveIncomes = async function(data){
-	return await incModel.saveIncomes(data);
+    return await incModel.saveIncomes(data);
 }
 
 /**
