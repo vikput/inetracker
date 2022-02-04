@@ -39,7 +39,7 @@ exports.fetchDetailedReports = async function(req, res){
 	userId = req.session.userData.userid;
      
     let response = await getDetailedReports(userId, filterData);
-
+    
     res.render('pages/reports/partials/reportsAjaxResponse', {
     	title: 'Reports',
     	reportsData: response
@@ -47,5 +47,5 @@ exports.fetchDetailedReports = async function(req, res){
 }
 
 getDetailedReports = async function(userId, filterData){
-    return await reportService.getDetailedReports(userId, filterData);
+    return await reportService.getStatement(userId, filterData);
 }

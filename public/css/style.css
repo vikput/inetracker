@@ -2478,3 +2478,7 @@ p.error{
     margin-top: -100px;
     z-index:2;
 }
+
+.dynamic-sum-button {display: none;}
+.dynamic-button-div {padding-bottom: 10px;}
+.dynamic-inputs-div {padding-bottom: 10px;}

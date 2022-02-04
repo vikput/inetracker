@@ -62,3 +62,46 @@ exports.getDetailedReports = async function(userId, filterData){
         return response;
 	}
 }
+
+exports.getStatement = async function(userId, filterData){
+    try {
+        usersStatement = await reportsModel.getStatement(userId, filterData);
+        let reportData = [];
+        let totalInc = 0; let totalExp = 0; let balance = 0;
+        for (let i=0; i<usersStatement.length; i++) {
+            
+            if (usersStatement[i].type ==='Income') {
+                totalInc += parseFloat(usersStatement[i].amount);  
+            }
+
+            if (usersStatement[i].type ==='Expense') {
+                totalExp += parseFloat(usersStatement[i].amount);  
+            }
+
+            reportData.push({
+                'date': commonService.formatDate(usersStatement[i].date),
+                'type': usersStatement[i].type,
+                'amount': parseFloat(usersStatement[i].amount),
+                'comments': usersStatement[i].comments, 
+            });
+        }
+
+        response = {
+            status: 'success',
+            message: '',
+            data: reportData,
+            totalInc : totalInc,
+            totalExp : totalExp,
+            balance : parseFloat(totalInc) - parseFloat(totalExp)
+        };
+
+        return response;
+    } catch(Exception) {
+        response = {
+            status: 'error',
+            message: 'Something went wrong, please try again later.',
+            data: ''
+        };
+        return response;
+    }
+}

@@ -66,15 +66,16 @@ exports.getUsersTotalIncCount = async function(data){
 */
 exports.fetchUsersIncomes = async function(data, start, limit, sortByArr, orderByArr){
     results = await incModel.fetchUsersIncomes(data, start, limit, sortByArr, orderByArr);
+    console.log(results);
     incomes = [];
     for (let i=0; i<results.length; i++){
         incomes.push({
             'year': results[i].year,
             'month': results[i].month,
-            'date': commonService.formatDate(results[i].in_date),
+            'date': commonService.formatDate(results[i].in_ex_date),
             'amount': commonService.currencySymbol(results[i].amount),
             'comments': commonService.escapeHtml(results[i].comments),
-            'action': 'Action'
+            'action': results[i].in_ex_type,
         });
     }
 

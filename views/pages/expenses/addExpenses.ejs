@@ -51,6 +51,19 @@
                <div class="form-group"><label for="ex-date" class=" form-control-label">Date</label><input type="text" id="ex-date" name="exdate" placeholder="0000-00-00" class="form-control"></div>
                
                <div class="form-group"><label for="comments" class=" form-control-label">Comments</label><input type="text" id="comments" name="comments" placeholder="Enter comments" class="form-control"></div>
+
+               <div row="class">
+                <div class="dynamic-button-div">
+                  <span>If you have multiple expense amount to calculate. Click on Add+ button and insert amount on each inputs separately it will get added automatically.</span>
+                </div>
+                <div class="dynamic-button-div" id="dynamic-button-div">
+                  <input type="button" name="dynamic-button" id="dynamic-button" value="Add+">
+                </div>
+                <div class="dynamic-inputs-div" id="dynamic-inputs"></div>
+                <div class="dynamic-sum-button" id="dynamic-sum-button">
+                  <input type="button" name="dynamic-sum-button" id="dynamic-sum-button" value="SUM" onclick="calculate()">
+                </div>
+               </div>
                
                <div class="form-group"><label for="monthly-expense" class=" form-control-label">Monthly expense</label><input type="text" id="monthly-expense" name="monthlyexpense" placeholder="100000" value="0" maxlength="7" class="form-control"></div>
                
@@ -101,4 +114,30 @@ jQuery(document).ready(function(){
   });
   jQuery('#ex-date').datepicker('setDate', today);
 })
+
+function dynamicInput() {
+  let counter = 0;
+  function addInput(num) {
+    counter = parseInt(counter) + parseInt(num);
+    let input = '<input type="text" class="dynamic-inputs" name="dynamic-inputs'+counter+'" id="dynamic-inputs'+counter+'">';
+    jQuery('#dynamic-inputs').append(input);
+    jQuery("#dynamic-sum-button").css("display", "block");
+  }
+  return addInput;
+}
+
+var addInput = dynamicInput();
+jQuery('#dynamic-button').click(function(e){
+    e.preventDefault();
+    let num = 1;
+    addInput(num);
+});
+
+function calculate() {
+  var sum = 0;
+  jQuery('.dynamic-inputs').each(function(){
+      sum += parseFloat(this.value);
+  });
+  jQuery('#monthly-expense').val(sum);
+}
 </script>
