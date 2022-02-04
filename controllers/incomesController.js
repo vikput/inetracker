@@ -39,6 +39,7 @@ async function saveData(userId, postData){
 			postData.inyear,
 			postData.inmonth,
 			postData.indate,
+			'Income',
 			postData.comments,
 			parseFloat(postData.monthlyincome)
 		]
@@ -70,7 +71,7 @@ exports.fetchIncomes = async function(req, res){
 	}
 
     data = await fetchUsersIncomes(userId, start, limit, sortByArr, orderByArr);
-    let recordsTotal = await incService.getUsersTotalIncCount([userId]);
+    let recordsTotal = await incService.getUsersTotalIncCount([userId, 'Income']);
     let recordsFiltered = data.length;
     let response = {
       "draw": req.query.draw,
@@ -84,7 +85,8 @@ exports.fetchIncomes = async function(req, res){
 fetchUsersIncomes = async function (userid, start, limit, sortByArr, orderByArr){
   try {
         let data = [
-          userid
+          userid,
+          'Income'
       ];
 
       return await incService.fetchUsersIncomes(data, start, limit, sortByArr, orderByArr);

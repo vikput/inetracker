@@ -40,6 +40,7 @@ async function saveData(userId, postData){
 			postData.exyear,
 			postData.exmonth,
 			postData.exdate,
+			'Expense',
 			postData.comments,
 			parseFloat(postData.monthlyexpense)
 		];
@@ -71,9 +72,9 @@ exports.fetchExpenses = async function(req, res){
 	}
     
     data = await fetchUsersExpenses(userId, start, limit, sortByArr, orderByArr);
-    let recordsTotal = await expService.getUsersTotalExpCount([userId]);
-    let recordsFiltered = await expService.getUsersTotalExpCount([userId]);
-    //let recordsFiltered = data.length;
+    let recordsTotal = await expService.getUsersTotalExpCount([userId, 'Expense']);
+    //let recordsFiltered = await expService.getUsersTotalExpCount([userId, 'Expense']);
+    let recordsFiltered = data.length;
     let response = {
       "draw": req.query.draw,
       "recordsTotal": parseInt(recordsTotal),
@@ -86,7 +87,8 @@ exports.fetchExpenses = async function(req, res){
 fetchUsersExpenses = async function (userid, start, limit, sortByArr, orderByArr){
   try {
         let data = [
-          userid
+          userid,
+          'Expense'
       ];
 
       return await expService.fetchUsersExpenses(data, start, limit, sortByArr, orderByArr);

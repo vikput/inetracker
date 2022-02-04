@@ -1,107 +1,61 @@
 <div class="card">
 	<div class="card-body">
 		<div class="row bg-dark text-white">
-	    	<div class="form-group col-sm-2 border-bottom border-dark">
-	    		<label for="in_type" class=" form-control-label">Type</label>
+	    	<div class="form-group col-sm-3 border-bottom border-dark">
+	    		<label for="in_type" class=" form-control-label">Date</label>
             </div>
-	    	<div class="form-group col-sm-2 border-bottom border-dark">
-	    		<label for="year" class=" form-control-label">Year</label>
+	    	<div class="form-group col-sm-3 border-bottom border-dark">
+	    		<label for="year" class=" form-control-label">Type</label>
             </div>
-            <div class="form-group col-sm-2 border-bottom border-dark">
-	    		<label for="month" class=" form-control-label">Month</label>
-            </div>
-            <div class="form-group col-sm-2 border-bottom border-dark">
-	    		<label for="date" class=" form-control-label">Date</label>
-            </div>
-            <div class="form-group col-sm-2 border-bottom border-dark">
+            <div class="form-group col-sm-3 border-bottom border-dark">
 	    		<label for="amount" class=" form-control-label"><span>&#8377;</span>Amount</label>
             </div>
-            <div class="form-group col-sm-2 border-bottom border-dark">
-	    		<label for="comment" class=" form-control-label">Comment</label>
+            <div class="form-group col-sm-3 border-bottom border-dark">
+	    		<label for="comment" class=" form-control-label">Comments</label>
             </div>
 	    </div>
 		<% for(i=0;i<reportsData.data.length; i++) { %>
-		    <div class="row text-white">
-		    	<div class="form-group col-sm-2 bg-secondary border-bottom border-dark">
-		           <%= reportsData.data[i].in_type%>
+		    <div class="row">
+		        <div class="form-group col-sm-3 border-bottom border-dark">
+		           <%= reportsData.data[i].date%>
 		        </div>
-		    	<div class="form-group col-sm-2 bg-secondary border-bottom border-dark">
-		           <%= reportsData.data[i].in_year%>
+		    	<div class="form-group col-sm-3 border-bottom border-dark">
+		           <%= reportsData.data[i].type%>
 		        </div>
-		        <div class="form-group col-sm-2 bg-secondary border-bottom border-dark">
-		           <%= reportsData.data[i].in_month%>
-		        </div>
-		        <div class="form-group col-sm-2 bg-secondary border-bottom border-dark">
-		           <%= reportsData.data[i].in_date%>
-		        </div>
-		        <div class="form-group col-sm-2 bg-secondary border-bottom border-dark">
+		        <div class="form-group col-sm-3 border-bottom border-dark">
 		           <span>&#8377;</span><%= reportsData.data[i].amount%>
 		        </div>
-		        <div class="form-group col-sm-2 bg-secondary border-bottom border-dark">
+		        <div class="form-group col-sm-3 border-bottom border-dark">
 		           <%= reportsData.data[i].comments%>
 		        </div>
 		    </div>
-		    <div class="row">
-			    <% for (j=0; j<reportsData.data[i].expenses.length; j++) { %>
-			        <div class="form-group col-sm-2 border-bottom border-dark">
-			           <%= reportsData.data[i].expenses[j].ex_type%>
-			        </div>
-			        <div class="form-group col-sm-2 border-bottom border-dark">
-			           <%= reportsData.data[i].expenses[j].ex_year%>
-			        </div>
-			        <div class="form-group col-sm-2 border-bottom border-dark">
-			           <%= reportsData.data[i].expenses[j].ex_month%>
-			        </div>
-			        <div class="form-group col-sm-2 border-bottom border-dark">
-			           <%= reportsData.data[i].expenses[j].ex_date%>
-			        </div>
-			        <div class="form-group col-sm-2 border-bottom border-dark">
-			           <span>&#8377;</span><%= reportsData.data[i].expenses[j].ex_amount%>
-			        </div>
-			        <div class="form-group col-sm-2 border-bottom border-dark">
-			           <%= reportsData.data[i].expenses[j].ex_comments%>
-			        </div>    
-			    <% } %>
-		    </div>
-		    <div class="row">
-		    	<div class="form-group col-sm-2 border-bottom border-dark">
-			        <%= '-'%>
-			    </div>
-			    <div class="form-group col-sm-2 border-bottom border-dark">
-			        <%= '-'%>
-			    </div>
-			    <div class="form-group col-sm-2 border-bottom border-dark">
-			        <%= '-'%>
-			    </div>
-		    	<div class="form-group col-sm-2 border-bottom border-dark">
-			        <%= 'Balance'%>
-			    </div>
-			    <div class="form-group col-sm-2 border-bottom border-dark">
-			        <span>&#8377;</span><%= reportsData.data[i].balance%>
-			    </div>
-			    <div class="form-group col-sm-2 border-bottom border-dark">
-			        <%= '-'%>
-			    </div>
-		    </div>
 	    <% } %>
 	    <div class="row">
-	    	<div class="form-group col-sm-2 border-bottom border-dark">
+		    <div class="form-group col-sm-3 border-bottom border-dark">
+		        <%= 'Total Income :-'%>
+		    </div>
+	    	<div class="form-group col-sm-3 border-bottom border-dark">
+		        <span>&#8377;</span><%= reportsData.totalInc%>
+		    </div>
+		    <div class="form-group col-sm-3 border-bottom border-dark">
+		        <%= 'Total Expense :-'%>
+		    </div>
+		    <div class="form-group col-sm-3 border-bottom border-dark">
+		        <span>&#8377;</span><%= reportsData.totalExp%>
+		    </div>
+	    </div>
+	    <div class="row">
+		    <div class="form-group col-sm-3 border-bottom border-dark">
 		        <%= '-'%>
 		    </div>
-		    <div class="form-group col-sm-2 border-bottom border-dark">
+		    <div class="form-group col-sm-3 border-bottom border-dark">
 		        <%= '-'%>
 		    </div>
-		    <div class="form-group col-sm-2 border-bottom border-dark">
-		        <%= '-'%>
+	    	<div class="form-group col-sm-3 border-bottom border-dark">
+		        <%= 'Balance :-'%>
 		    </div>
-	    	<div class="form-group col-sm-2 border-bottom border-dark">
-		        <%= 'Total Balance'%>
-		    </div>
-		    <div class="form-group col-sm-2 border-bottom border-dark">
-		        <span>&#8377;</span><%= reportsData.total%>
-		    </div>
-		    <div class="form-group col-sm-2 border-bottom border-dark">
-		        <%= '-'%>
+		    <div class="form-group col-sm-3 border-bottom border-dark">
+		        <span>&#8377;</span><%= reportsData.balance%>
 		    </div>
 	    </div>
 	</div>

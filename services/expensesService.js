@@ -24,10 +24,10 @@ exports.fetchUsersExpenses = async function(data, start, limit, sortByArr, order
         expenses.push({
             'year': results[i].year,
             'month': results[i].month,
-            'date': commonService.formatDate(results[i].date),
+            'date': commonService.formatDate(results[i].in_ex_date),
             'amount': commonService.currencySymbol(results[i].amount),
             'comments': commonService.escapeHtml(results[i].comments),
-            'action': 'Action'
+            'action': results[i].in_ex_type
         });
     }
 
