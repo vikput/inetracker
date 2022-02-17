@@ -6,26 +6,27 @@ jQuery('#submit').click(function(){
     let inCsrc = jQuery('#income-sources').val();
     
     let data = {};
+
     if (year && month) {
-    	data.year = year;
-    	data.month = month;
-    } else if (year && !month) {
-    	swal({
-            title: 'Error!',
-            text: 'PLease select month.',
-            icon: 'error',
-            button: 'Ok'
-        });
-    	return false;
-    } else if(!year && month) {
+        data.year = year;
+        data.month = month;        
+    } else if (year && month==='') {
         swal({
             title: 'Error!',
-            text: 'PLease select year.',
+            text: 'Please select month.',
             icon: 'error',
             button: 'Ok'
         });
         return false;
-    } 
+    } else if (month && year==='') {
+        swal({
+            title: 'Error!',
+            text: 'Please select year.',
+            icon: 'error',
+            button: 'Ok'
+        });
+        return false;
+    }
 
     if(fromDate && toDate) {
     	if (fromDate <= toDate) {
@@ -47,7 +48,7 @@ jQuery('#submit').click(function(){
     } else {
     	swal({
             title: 'Error!',
-            text: 'PLease select income sources.',
+            text: 'Please select income sources.',
             icon: 'error',
             button: 'Ok'
         });
@@ -80,4 +81,50 @@ jQuery('#submit').click(function(){
     })
 
     return false;   
+});
+
+jQuery('#orsubmit').click(function(){
+    let year = jQuery('#oryear').val();
+    let month = jQuery('#ormonth').val();
+    let data = {};
+
+    if (year==='') {
+        swal({
+            title: 'Error!',
+            text: 'Please select Year.',
+            icon: 'error',
+            button: 'Ok'
+        });
+        return false;
+    } else {
+        data.year = year;
+        data.month = month;
+    }
+
+    jQuery.ajax({
+        url: '/report/fetch-overall-reports',
+        type: 'POST',
+        headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
+        data: data,
+        dataType: 'html',
+        beforeSend: function(){
+          jQuery('.loader').show()
+        },
+        complete: function(){
+          jQuery('.loader').hide();
+        },
+        success: function(response){
+          jQuery('.overall-reports-response').html(response);
+        },
+        error: function(error){
+            swal({
+                title: 'Error!',
+                text: response.data.message,
+                icon: response.data.status,
+                button: 'Ok'
+            });
+        }
+    })
+
+    return false;
 });

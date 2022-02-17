@@ -49,3 +49,27 @@ exports.fetchDetailedReports = async function(req, res){
 getDetailedReports = async function(userId, filterData){
     return await reportService.getStatement(userId, filterData);
 }
+
+exports.overAllReports = async function(req, res) {
+	userId = req.session.userData.userid
+	res.render('pages/reports/overallReports', {
+		title : 'Reports',
+		username : req.session.userData.username,
+		csrfToken : req.csrfToken()
+	});
+}
+
+exports.fetchOverAllReports = async function(req, res) {
+    filterData = req.body;
+	userId = req.session.userData.userid;
+	incomeSources = await incService.getUsersIncomeSources([userId])
+	let response = await getOverAllReports(userId, filterData, incomeSources);
+	res.render('pages/reports/partials/overAllReportsAjaxResponse', {
+    	title: 'Reports',
+    	reportsData: response
+    });	
+}
+
+getOverAllReports = async function(userId, filterData){
+    return await reportService.fetchOverAllReports(userId, filterData, incomeSources);
+}

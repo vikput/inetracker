@@ -105,3 +105,43 @@ exports.getStatement = async function(userId, filterData){
         return response;
     }
 }
+
+exports.fetchOverAllReports = async function(userId, filterData, incomeSources) {
+    try {
+        let reportData = [];
+        var totalInc=0; var totalExp=0; var balance=0;
+        for(let i=0; i<incomeSources.length; i++) {
+            overAllReports = await reportsModel.fetchOverAllReports(userId, filterData, incomeSources[i].id);
+            var income=0; var expense=0;
+            for(let j=0; j<overAllReports.length; j++) {
+                income = overAllReports[j].overall_income;
+                expense = overAllReports[j].overall_expense;
+                totalInc += parseFloat(overAllReports[j].overall_income);
+                totalExp += parseFloat(overAllReports[j].overall_expense);
+            }
+
+            reportData.push({
+                'income_source': incomeSources[i].users_income_sources,
+                'overall_income': income,
+                'overall_expense': expense
+            });
+        }
+
+        response = {
+            status: 'success',
+            message: '',
+            data: reportData,
+            totalInc: totalInc,
+            totalExp: totalExp,
+            balance: parseFloat(totalInc) - parseFloat(totalExp)
+        };
+        return response;
+    } catch(Exception) {
+        response = {
+            status: 'error',
+            message: Exception,
+            data: ''
+        };
+        return response;
+    }    
+}

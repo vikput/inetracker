@@ -140,3 +140,50 @@ exports.getStatement = function(userId, filterData){
 		conn.end();
     });
 }
+
+exports.fetchOverAllReports = function(userId, filterData, incsId) {
+	return new Promise(function(resolve, reject){
+        let dbObj = new mysqldb();
+		let conn = dbObj.connect();
+		conn.connect();
+
+		let response = {};
+
+		let query = 'SELECT (SELECT sum(in_ex_amount) FROM users_monthly_in_ex WHERE user_id = '+userId+' AND uis_id = '+incsId+' and in_ex_type="income") as overall_income,';
+		query += ' (SELECT SUM(in_ex_amount) FROM users_monthly_in_ex WHERE user_id = '+userId+' AND uis_id = '+incsId+' AND in_ex_type="expense") AS overall_expense';
+		query +=' FROM users_monthly_in_ex where user_id = '+userId+' AND uis_id = '+incsId+'';
+
+		/*let data = [
+		    userId,
+		    incsId
+		];*/
+
+		if(filterData.year) {
+			//data.push(filterData.year);
+			let year = filterData.year;
+			query +=' AND in_ex_year = "'+year+'"';
+		}
+
+		if(filterData.month) {
+			//data.push(filterData.month);
+			let month = filterData.month;
+			query +=' AND in_ex_month = "'+month+'"';
+		}
+
+		query += ' GROUP BY uis_id';
+
+		conn.query(query, function(err, result){
+		    if (err) {
+		        console.log(err)
+		        response.status = configObj.error.status;
+		        response.message = configObj.error.err1_message;
+		        //response.message = err;
+		        response.data = '';
+		        reject(response);
+		    } else {
+		        resolve(result);
+		    }
+		});
+		conn.end();
+	});
+}
