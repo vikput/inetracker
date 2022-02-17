@@ -6,18 +6,27 @@ jQuery('#submit').click(function(){
     let inCsrc = jQuery('#income-sources').val();
     
     let data = {};
-    if (year==='' || month==='') {
+
+    if (year && month) {
+        data.year = year;
+        data.month = month;        
+    } else if (year && month==='') {
         swal({
             title: 'Error!',
-            text: 'PLease select Year & Month.',
+            text: 'Please select month.',
             icon: 'error',
             button: 'Ok'
         });
         return false;
-    } else {
-        data.year = year;
-        data.month = month;
-    } 
+    } else if (month && year==='') {
+        swal({
+            title: 'Error!',
+            text: 'Please select year.',
+            icon: 'error',
+            button: 'Ok'
+        });
+        return false;
+    }
 
     if(fromDate && toDate) {
     	if (fromDate <= toDate) {
@@ -39,7 +48,7 @@ jQuery('#submit').click(function(){
     } else {
     	swal({
             title: 'Error!',
-            text: 'PLease select income sources.',
+            text: 'Please select income sources.',
             icon: 'error',
             button: 'Ok'
         });
@@ -82,7 +91,7 @@ jQuery('#orsubmit').click(function(){
     if (year==='') {
         swal({
             title: 'Error!',
-            text: 'PLease select Year.',
+            text: 'Please select Year.',
             icon: 'error',
             button: 'Ok'
         });
