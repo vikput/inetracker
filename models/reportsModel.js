@@ -149,28 +149,38 @@ exports.fetchOverAllReports = function(userId, filterData, incsId) {
 
 		let response = {};
 
-		let query = 'SELECT (SELECT sum(in_ex_amount) FROM users_monthly_in_ex WHERE user_id = '+userId+' AND uis_id = '+incsId+' and in_ex_type="income") as overall_income,';
-		query += ' (SELECT SUM(in_ex_amount) FROM users_monthly_in_ex WHERE user_id = '+userId+' AND uis_id = '+incsId+' AND in_ex_type="expense") AS overall_expense';
-		query +=' FROM users_monthly_in_ex where user_id = '+userId+' AND uis_id = '+incsId+'';
-
-		/*let data = [
-		    userId,
-		    incsId
-		];*/
-
+        let queryFilter;
 		if(filterData.year) {
 			//data.push(filterData.year);
 			let year = filterData.year;
-			query +=' AND in_ex_year = "'+year+'"';
+			queryFilter =' AND in_ex_year = "'+year+'"';
 		}
 
 		if(filterData.month) {
 			//data.push(filterData.month);
 			let month = filterData.month;
-			query +=' AND in_ex_month = "'+month+'"';
+			queryFilter +=' AND in_ex_month = "'+month+'"';
 		}
 
+		let incomeQuery = 'SELECT SUM(in_ex_amount) FROM users_monthly_in_ex';
+		incomeQuery += ' WHERE user_id = '+userId+' AND uis_id = '+incsId+''; 
+		incomeQuery += ' AND in_ex_type="income"';
+		incomeQuery += queryFilter;
+
+		let expenseQuery = 'SELECT SUM(in_ex_amount) FROM users_monthly_in_ex';
+		expenseQuery += ' WHERE user_id = '+userId+' AND uis_id = '+incsId+'';
+		expenseQuery += ' AND in_ex_type="expense"';
+		expenseQuery += queryFilter;
+		
+		let query = 'SELECT ('+incomeQuery+') AS overall_income, ('+expenseQuery+') AS overall_expense';
+		query +=' FROM users_monthly_in_ex where user_id = '+userId+' AND uis_id = '+incsId+'';
+		query += queryFilter;
 		query += ' GROUP BY uis_id';
+
+        /*let data = [
+		    userId,
+		    incsId
+		];*/
 
 		conn.query(query, function(err, result){
 		    if (err) {

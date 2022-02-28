@@ -112,10 +112,11 @@ exports.fetchOverAllReports = async function(userId, filterData, incomeSources) 
         var totalInc=0; var totalExp=0; var balance=0;
         for(let i=0; i<incomeSources.length; i++) {
             overAllReports = await reportsModel.fetchOverAllReports(userId, filterData, incomeSources[i].id);
-            var income=0; var expense=0;
+            var income=0; var expense=0; var _balance=0;
             for(let j=0; j<overAllReports.length; j++) {
                 income = overAllReports[j].overall_income;
                 expense = overAllReports[j].overall_expense;
+                _balance = parseFloat(overAllReports[j].overall_income) - parseFloat(overAllReports[j].overall_expense); 
                 totalInc += parseFloat(overAllReports[j].overall_income);
                 totalExp += parseFloat(overAllReports[j].overall_expense);
             }
@@ -123,7 +124,8 @@ exports.fetchOverAllReports = async function(userId, filterData, incomeSources) 
             reportData.push({
                 'income_source': incomeSources[i].users_income_sources,
                 'overall_income': income,
-                'overall_expense': expense
+                'overall_expense': expense,
+                'overall_balance': _balance
             });
         }
 
