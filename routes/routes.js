@@ -46,9 +46,9 @@ router.get('/expense/view-expenses', isActive.isActive, expenses_controller.view
 router.get('/expense/fetch-expenses', isActive.isActive, expenses_controller.fetchExpenses);
 
 //Reports modules routes
-router.get('/report/detailed-reports', isActive.isActive, reports_controller.detailedReports);
-router.post('/report/fetch-detailed-reports', isActive.isActive, reports_controller.fetchDetailedReports);
-router.get('/report/overall-reports', isActive.isActive, reports_controller.overAllReports);
-router.post('/report/fetch-overall-reports', isActive.isActive, reports_controller.fetchOverAllReports);
+router.get('/report/detailed-report', isActive.isActive, reports_controller.detailedReports);
+router.post('/report/fetch-detailed-report', isActive.isActive, reports_controller.fetchDetailedReports);
+router.get('/report/overall-report', isActive.isActive, reports_controller.overAllReports);
+router.post('/report/fetch-overall-report', isActive.isActive, reports_controller.fetchOverAllReports);
 
 module.exports = router;

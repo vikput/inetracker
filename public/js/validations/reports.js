@@ -56,7 +56,7 @@ jQuery('#submit').click(function(){
     }
      
     jQuery.ajax({
-    	url: '/report/fetch-detailed-reports',
+    	url: '/report/fetch-detailed-report',
     	type: 'POST',
     	headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
     	data: data,
@@ -102,7 +102,7 @@ jQuery('#orsubmit').click(function(){
     }
 
     jQuery.ajax({
-        url: '/report/fetch-overall-reports',
+        url: '/report/fetch-overall-report',
         type: 'POST',
         headers : { 'X-CSRF-Token': jQuery('#csrf_token').val() },
         data: data,
