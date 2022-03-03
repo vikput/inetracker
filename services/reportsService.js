@@ -128,7 +128,7 @@ exports.fetchOverAllReports = async function(userId, filterData, incomeSources) 
                 'overall_balance': _balance.toLocaleString('en-IN')
             });
         }
-        console.log(reportData);
+        
         response = {
             status: 'success',
             message: '',
