@@ -81,7 +81,7 @@ exports.getStatement = async function(userId, filterData){
             reportData.push({
                 'date': commonService.formatDate(usersStatement[i].date),
                 'type': usersStatement[i].type,
-                'amount': parseFloat(usersStatement[i].amount),
+                'amount': parseFloat(usersStatement[i].amount).toLocaleString('en-IN'),
                 'comments': usersStatement[i].comments, 
             });
         }
@@ -90,9 +90,9 @@ exports.getStatement = async function(userId, filterData){
             status: 'success',
             message: '',
             data: reportData,
-            totalInc : totalInc,
-            totalExp : totalExp,
-            balance : parseFloat(totalInc) - parseFloat(totalExp)
+            totalInc : totalInc.toLocaleString('en-IN'),
+            totalExp : totalExp.toLocaleString('en-IN'),
+            balance : (parseFloat(totalInc) - parseFloat(totalExp)).toLocaleString('en-IN')
         };
 
         return response;
@@ -114,28 +114,28 @@ exports.fetchOverAllReports = async function(userId, filterData, incomeSources) 
             overAllReports = await reportsModel.fetchOverAllReports(userId, filterData, incomeSources[i].id);
             var income=0; var expense=0; var _balance=0;
             for(let j=0; j<overAllReports.length; j++) {
-                income = overAllReports[j].overall_income;
-                expense = overAllReports[j].overall_expense;
-                _balance = parseFloat(overAllReports[j].overall_income) - parseFloat(overAllReports[j].overall_expense); 
-                totalInc += parseFloat(overAllReports[j].overall_income);
-                totalExp += parseFloat(overAllReports[j].overall_expense);
+                income = (overAllReports[j].overall_income) ? overAllReports[j].overall_income : 0;
+                expense = (overAllReports[j].overall_expense) ? overAllReports[j].overall_expense : 0;
+                _balance = parseFloat(income) - parseFloat(expense); 
+                totalInc += parseFloat(income);
+                totalExp += parseFloat(expense);
             }
 
             reportData.push({
                 'income_source': incomeSources[i].users_income_sources,
-                'overall_income': income,
-                'overall_expense': expense,
-                'overall_balance': _balance
+                'overall_income': income.toLocaleString('en-IN'),
+                'overall_expense': expense.toLocaleString('en-IN'),
+                'overall_balance': _balance.toLocaleString('en-IN')
             });
         }
-
+        console.log(reportData);
         response = {
             status: 'success',
             message: '',
             data: reportData,
-            totalInc: totalInc,
-            totalExp: totalExp,
-            balance: parseFloat(totalInc) - parseFloat(totalExp)
+            totalInc: totalInc.toLocaleString('en-IN'),
+            totalExp: totalExp.toLocaleString('en-IN'),
+            balance: (parseFloat(totalInc) - parseFloat(totalExp)).toLocaleString('en-IN')
         };
         return response;
     } catch(Exception) {
