@@ -1,62 +1,39 @@
 <div class="card">
-	<div class="card-body">
-		<div class="row bg-dark text-white">
-	    	<div class="form-group col-sm-3 border-bottom border-dark">
-	    		<label for="in_type" class=" form-control-label">Date</label>
-            </div>
-	    	<div class="form-group col-sm-3 border-bottom border-dark">
-	    		<label for="year" class=" form-control-label">Type</label>
-            </div>
-            <div class="form-group col-sm-3 border-bottom border-dark">
-	    		<label for="amount" class=" form-control-label"><span>&#8377;</span>Amount</label>
-            </div>
-            <div class="form-group col-sm-3 border-bottom border-dark">
-	    		<label for="comment" class=" form-control-label">Comments</label>
-            </div>
-	    </div>
-		<% for(i=0;i<reportsData.data.length; i++) { %>
-		    <div class="row">
-		        <div class="form-group col-sm-3 border-bottom border-dark">
-		           <%= reportsData.data[i].date%>
-		        </div>
-		    	<div class="form-group col-sm-3 border-bottom border-dark">
-		           <%= reportsData.data[i].type%>
-		        </div>
-		        <div class="form-group col-sm-3 border-bottom border-dark">
-		           <span>&#8377;</span><%= reportsData.data[i].amount%>
-		        </div>
-		        <div class="form-group col-sm-3 border-bottom border-dark">
-		           <%= reportsData.data[i].comments%>
-		        </div>
-		    </div>
-	    <% } %>
-	    <div class="row">
-		    <div class="form-group col-sm-3 border-bottom border-dark">
-		        <%= 'Total Income :-'%>
-		    </div>
-	    	<div class="form-group col-sm-3 border-bottom border-dark">
-		        <span>&#8377;</span><%= reportsData.totalInc%>
-		    </div>
-		    <div class="form-group col-sm-3 border-bottom border-dark">
-		        <%= 'Total Expense :-'%>
-		    </div>
-		    <div class="form-group col-sm-3 border-bottom border-dark">
-		        <span>&#8377;</span><%= reportsData.totalExp%>
-		    </div>
-	    </div>
-	    <div class="row">
-		    <div class="form-group col-sm-3 border-bottom border-dark">
-		        <%= '-'%>
-		    </div>
-		    <div class="form-group col-sm-3 border-bottom border-dark">
-		        <%= '-'%>
-		    </div>
-	    	<div class="form-group col-sm-3 border-bottom border-dark">
-		        <%= 'Balance :-'%>
-		    </div>
-		    <div class="form-group col-sm-3 border-bottom border-dark">
-		        <span>&#8377;</span><%= reportsData.balance%>
-		    </div>
-	    </div>
-	</div>
+    <div class="card-header">
+        <strong class="card-title">View Report</strong>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% for(i=0;i<reportsData.data.length; i++) { %>	
+                <tr>
+                    <td><%= reportsData.data[i].date%></td>
+                    <td><%= reportsData.data[i].type%></td>
+                    <td><%= reportsData.data[i].amount%></td>
+                    <td><%= reportsData.data[i].comments%></td>
+                </tr>
+            <% } %>
+                <tr>
+                    <th>Total Income</th>
+                    <td><%= reportsData.totalInc%></td>
+                    <th>Total Expense</th>
+                    <td><%= reportsData.totalExp%></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <th>Balance</th>
+                    <td><%= reportsData.balance%></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
