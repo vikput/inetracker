@@ -164,12 +164,12 @@ exports.fetchOverAllReports = function(userId, filterData, incsId) {
 
 		let incomeQuery = 'SELECT SUM(in_ex_amount) FROM users_monthly_in_ex';
 		incomeQuery += ' WHERE user_id = '+userId+' AND uis_id = '+incsId+''; 
-		incomeQuery += ' AND in_ex_type="income"';
+		incomeQuery += ' AND in_ex_type="'+configObj.transaction_type.income+'"';
 		incomeQuery += queryFilter;
 
 		let expenseQuery = 'SELECT SUM(in_ex_amount) FROM users_monthly_in_ex';
 		expenseQuery += ' WHERE user_id = '+userId+' AND uis_id = '+incsId+'';
-		expenseQuery += ' AND in_ex_type="expense"';
+		expenseQuery += ' AND in_ex_type="'+configObj.transaction_type.expense+'"';
 		expenseQuery += queryFilter;
 		
 		let query = 'SELECT ('+incomeQuery+') AS overall_income, ('+expenseQuery+') AS overall_expense';

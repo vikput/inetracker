@@ -1,5 +1,6 @@
 const incService = require('../services/incomesService');
 const expService = require('../services/expensesService');
+const configObj = require('../config/config');
 
 
 exports.index = async function(req, res){
@@ -40,7 +41,7 @@ async function saveData(userId, postData){
 			postData.exyear,
 			postData.exmonth,
 			postData.exdate,
-			'Expense',
+			configObj.transaction_type.expense,
 			postData.comments,
 			parseFloat(postData.monthlyexpense)
 		];
@@ -72,7 +73,7 @@ exports.fetchExpenses = async function(req, res){
 	}
     
     data = await fetchUsersExpenses(userId, start, limit, sortByArr, orderByArr);
-    let recordsTotal = await expService.getUsersTotalExpCount([userId, 'Expense']);
+    let recordsTotal = await expService.getUsersTotalExpCount([userId, configObj.transaction_type.expense]);
     //let recordsFiltered = await expService.getUsersTotalExpCount([userId, 'Expense']);
     let recordsFiltered = data.length;
     let response = {
@@ -88,7 +89,7 @@ fetchUsersExpenses = async function (userid, start, limit, sortByArr, orderByArr
   try {
         let data = [
           userid,
-          'Expense'
+          configObj.transaction_type.expense
       ];
 
       return await expService.fetchUsersExpenses(data, start, limit, sortByArr, orderByArr);

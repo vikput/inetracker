@@ -1,4 +1,5 @@
 const incService = require('../services/incomesService');
+const configObj = require('../config/config');
 
 
 exports.index = async function(req, res){
@@ -39,7 +40,7 @@ async function saveData(userId, postData){
 			postData.inyear,
 			postData.inmonth,
 			postData.indate,
-			'Income',
+			configObj.transaction_type.income,
 			postData.comments,
 			parseFloat(postData.monthlyincome)
 		]
@@ -71,7 +72,7 @@ exports.fetchIncomes = async function(req, res){
 	}
 
     data = await fetchUsersIncomes(userId, start, limit, sortByArr, orderByArr);
-    let recordsTotal = await incService.getUsersTotalIncCount([userId, 'Income']);
+    let recordsTotal = await incService.getUsersTotalIncCount([userId, configObj.transaction_type.income]);
     let recordsFiltered = data.length;
     let response = {
       "draw": req.query.draw,
@@ -86,7 +87,7 @@ fetchUsersIncomes = async function (userid, start, limit, sortByArr, orderByArr)
   try {
         let data = [
           userid,
-          'Income'
+          configObj.transaction_type.income
       ];
 
       return await incService.fetchUsersIncomes(data, start, limit, sortByArr, orderByArr);
