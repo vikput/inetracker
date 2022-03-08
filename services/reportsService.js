@@ -1,6 +1,7 @@
 const incSModel = require('../models/incomeSourcesModel');
 const reportsModel = require('../models/reportsModel');
 const commonService = require('./commonService');
+const configObj = require('../config/config');
 
 exports.getDetailedReports = async function(userId, filterData){
 	try {
@@ -70,11 +71,11 @@ exports.getStatement = async function(userId, filterData){
         let totalInc = 0; let totalExp = 0; let balance = 0;
         for (let i=0; i<usersStatement.length; i++) {
             
-            if (usersStatement[i].type ==='Income') {
+            if (usersStatement[i].type === configObj.transaction_type.income) {
                 totalInc += parseFloat(usersStatement[i].amount);  
             }
 
-            if (usersStatement[i].type ==='Expense') {
+            if (usersStatement[i].type === configObj.transaction_type.expense) {
                 totalExp += parseFloat(usersStatement[i].amount);  
             }
 

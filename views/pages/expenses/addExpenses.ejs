@@ -28,46 +28,55 @@
             <div class="card-body card-block">
             <form name="form-expenses" id="form-expenses" method="post">
                <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="csrf_token">
-               <div class="form-group"><label for="income-sources" class=" form-control-label">Income sources</label>
-                  <select name="incomesources" id="income-sources" class="form-control">
-                     <option value="">Please select</option>
-                     <!--<option value="101">All</option>-->
-                     <% for(i=0; i<incomeSources.length; i++){ %>
-                        <option value="<%=incomeSources[i].id %>"><%=incomeSources[i].users_income_sources %></option>
-                     <% } %>
-                  </select>
+               <div class="row">
+                  <div class="form-group col-sm-12"><label for="income-sources" class=" form-control-label">Income sources</label>
+                     <select name="incomesources" id="income-sources" class="form-control">
+                        <option value="">Please select</option>
+                        <!--<option value="101">All</option>-->
+                        <% for(i=0; i<incomeSources.length; i++){ %>
+                           <option value="<%=incomeSources[i].id %>"><%=incomeSources[i].users_income_sources %></option>
+                        <% } %>
+                     </select>
+                  </div>   
                </div>
-               
-               <div class="form-group"><label for="ex-year" class=" form-control-label">Year</label>
-                  <select name="exyear" id="ex-year" class="form-control">
-                  </select>
+               <div class="row">
+                  <div class="form-group col-sm-4"><label for="ex-year" class=" form-control-label">Year</label>
+                     <select name="exyear" id="ex-year" class="form-control">
+                     </select>
+                  </div>
+                  
+                  <div class="form-group col-sm-4"><label for="ex-month" class=" form-control-label">Month</label>
+                     <select name="exmonth" id="ex-month" class="form-control">
+                     </select>
+                  </div>
+                  
+                  <div class="form-group col-sm-4"><label for="ex-date" class=" form-control-label">Date</label><input type="text" id="ex-date" name="exdate" placeholder="0000-00-00" class="form-control"></div>   
                </div>
-               
-               <div class="form-group"><label for="ex-month" class=" form-control-label">Month</label>
-                  <select name="exmonth" id="ex-month" class="form-control">
-                  </select>
-               </div>
-               
-               <div class="form-group"><label for="ex-date" class=" form-control-label">Date</label><input type="text" id="ex-date" name="exdate" placeholder="0000-00-00" class="form-control"></div>
-               
-               <div class="form-group"><label for="comments" class=" form-control-label">Comments</label><input type="text" id="comments" name="comments" placeholder="Enter comments" class="form-control"></div>
+               <div class="row">
+                  <div class="form-group col-sm-6">
+                     <label for="comments" class=" form-control-label">Comments</label>
+                     <textarea id="comments" name="comments" placeholder="Enter comments" class="form-control"></textarea>
+                  </div>
 
-               <div row="class">
-                <div class="dynamic-button-div">
-                  <span>If you have multiple expense amount to calculate. Click on Add+ button and insert amount on each inputs separately it will get added automatically.</span>
-                </div>
-                <div class="dynamic-button-div" id="dynamic-button-div">
-                  <input type="button" name="dynamic-button" id="dynamic-button" value="Add+">
-                </div>
-                <div class="dynamic-inputs-div" id="dynamic-inputs"></div>
-                <div class="dynamic-sum-button" id="dynamic-sum-button">
-                  <input type="button" name="dynamic-sum-button" id="dynamic-sum-button" value="SUM" onclick="calculate()">
-                </div>
+                  <div class="form-group col-sm-6">
+                     <div class="dynamic-button-div">
+                        <span>If you have multiple expense amount to calculate. Click on Add+ button and insert amount on each inputs separately it will get added automatically.</span>
+                     </div>
+                     <div class="dynamic-button-div" id="dynamic-button-div">
+                        <input type="button" name="dynamic-button" id="dynamic-button" value="Add+">
+                     </div>
+                     <div class="dynamic-inputs-div" id="dynamic-inputs"></div>
+                     <div class="dynamic-sum-button" id="dynamic-sum-button">
+                        <input type="button" name="dynamic-sum-button" id="dynamic-sum-button" value="SUM" onclick="calculate()">
+                     </div>
+                  </div>   
                </div>
-               
-               <div class="form-group"><label for="monthly-expense" class=" form-control-label">Monthly expense</label><input type="text" id="monthly-expense" name="monthlyexpense" placeholder="100000" value="0" maxlength="7" class="form-control"></div>
-               
-               <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Save</button>
+               <div class="row">
+                  <div class="form-group col-sm-6"><label for="monthly-expense" class=" form-control-label">Amount</label><input type="text" id="monthly-expense" name="monthlyexpense" placeholder="100000" value="0" maxlength="7" class="form-control"></div>
+                  <div class="form-group col-sm-6 sub-btn">
+                     <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Save</button>
+                  </div>
+               </div>
             </form>
             </div>
          </div>
