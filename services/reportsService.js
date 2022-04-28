@@ -56,9 +56,9 @@ exports.getDetailedReports = async function(userId, filterData){
         return response;
 	} catch(Exception){
 		response = {
-        	status: 'error',
-        	message: 'Something went wrong, please try again later.',
-        	data: ''
+            status: configObj.error.status,
+            message: configObj.error.err1_message,
+            data: ''
         };
         return response;
 	}
@@ -99,8 +99,8 @@ exports.getStatement = async function(userId, filterData){
         return response;
     } catch(Exception) {
         response = {
-            status: 'error',
-            message: 'Something went wrong, please try again later.',
+            status: configObj.error.status,
+            message: configObj.error.err1_message,
             data: ''
         };
         return response;
@@ -141,8 +141,8 @@ exports.fetchOverAllReports = async function(userId, filterData, incomeSources) 
         return response;
     } catch(Exception) {
         response = {
-            status: 'error',
-            message: Exception,
+            status: configObj.error.status,
+            message: configObj.error.err1_message,
             data: ''
         };
         return response;

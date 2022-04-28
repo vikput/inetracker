@@ -1,9 +1,13 @@
 const expModel = require('../models/expensesModel');
 const commonService = require('./commonService');
-
+const ff = require('../config/featureflag');
 
 exports._saveData = async function(data){
-	return await expModel.saveData(data);
+	let response = await expModel.saveData(data);
+    if (ff.ieImprovement && response.status === 'success') {
+        setTimeout(commonService.balance, 2000, data);
+    }
+    return response;
 }
 
 /**

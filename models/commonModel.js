@@ -13,8 +13,8 @@ exports.checkUsername = function(userId=null, userName, callback){
     conn.query(query, userName, function(err, result){
     	if (err) {
     		response.status = configObj.error.status;
-            //response.message = configObj.error.err1_message;
-            response.message = err;
+            response.message = configObj.error.err1_message;
+            //response.message = err;
             response.data = '';
             return callback(response);
     	} else {
@@ -29,6 +29,85 @@ exports.checkUsername = function(userId=null, userName, callback){
 
     		return callback(response);
     	}
+    });
+    conn.end();
+}
+
+exports.getUsersBalanceCount = function(params){
+  return new Promise(function(resolve, reject){
+    let dbObj = new mysqldb();
+    let conn = dbObj.connect();
+    conn.connect();
+    let response = {};
+
+    let data = [
+        params[0],
+        params[1],
+        params[2],
+        params[3],
+    ];
+    
+    let query = 'SELECT COUNT(id) as balance_count FROM users_ine_balance WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
+    conn.query(query, data, function(err, result){
+      if (err) {
+        response.status = configObj.error.status;
+        response.message = configObj.error.err1_message;
+        //response.message = err;
+        response.data = '';
+        reject(response);
+      } else {
+        response.status = configObj.success.status;
+        response.message = '';
+        response.data = result[0].balance_count;
+        resolve(response);
+      }
+    });
+    conn.end();
+  });
+}
+
+exports.getUsersBalance = function(params){  
+  return new Promise(function(resolve, reject){
+    let dbObj = new mysqldb();
+    let conn = dbObj.connect();
+    conn.connect();
+    let response = {};
+    let data = [
+        params[0],
+        params[1],
+        params[2],
+        params[3],
+    ];
+    
+    let query = 'SELECT income, expense, balance FROM users_ine_balance WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
+    conn.query(query, data, function(err, result){
+      if (err) {
+        response.status = configObj.error.status;
+        response.message = configObj.error.err1_message;
+        //response.message = err;
+        response.data = '';
+        reject(response);
+      } else {
+        response.status = configObj.success.status;
+        response.message = '';
+        response.data = (result.length) > 0 ? [result[0].income, result[0].expense, result[0].balance] : [];
+        resolve(response);
+      }
+    });
+    conn.end();
+  });
+}
+
+exports.makeCalculation = function(query, data){
+    let dbObj = new mysqldb();
+    let conn = dbObj.connect();
+    conn.connect();
+    conn.query(query, data, function(err, res){
+        if (err) {
+            //Query execution failed.
+        } else {
+            //Query execution passed.
+        }
     });
     conn.end();
 }

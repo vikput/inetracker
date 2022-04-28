@@ -99,8 +99,6 @@ exports.getStatement = function(userId, filterData){
 		conn.connect();
 
 		let response = {};
-		/*let query = 'SELECT ex.id AS id, ex.ex_year AS `year`, ex.ex_month AS `month`, ex.ex_date AS `ex_date`, ex.ex_amount AS amount, ex.ex_comment AS comments, incs.users_income_sources AS income_sources FROM users_monthly_expenses AS ex, users_income_sources AS incs';
-		query += ' WHERE ex.user_id = ? AND ex.uis_id = ? AND ex.uis_id=incs.id';*/
 
 		let query = 'SELECT ie.in_ex_date AS `date`,ie.in_ex_type AS `type`, ie.in_ex_amount AS `amount`, ie.in_ex_comment AS comments';
 		query += ' FROM users_monthly_in_ex AS ie, users_income_sources AS incs WHERE ie.user_id = ? AND ie.uis_id = ? AND ie.uis_id=incs.id';
@@ -123,11 +121,10 @@ exports.getStatement = function(userId, filterData){
 		    query +=' AND ie.in_ex_date BETWEEN ? AND ?';
 		}
 
-		query += ' ORDER BY ie.in_ex_month ASC';
+		query += ' ORDER BY ie.in_ex_month, ie.in_ex_date DESC';
 
 		conn.query(query, data, function(err, result){
 		    if (err) {
-		    	console.log(err);
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
 		        //response.message = err;
@@ -184,7 +181,6 @@ exports.fetchOverAllReports = function(userId, filterData, incsId) {
 
 		conn.query(query, function(err, result){
 		    if (err) {
-		        console.log(err)
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
 		        //response.message = err;

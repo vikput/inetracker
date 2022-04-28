@@ -73,8 +73,8 @@ jQuery('#submit').click(function(){
         error: function(error){
             swal({
                 title: 'Error!',
-                text: response.data.message,
-                icon: response.data.status,
+                text: error.data.message,
+                icon: error.data.status,
                 button: 'Ok'
             });
         }
@@ -117,10 +117,12 @@ jQuery('#orsubmit').click(function(){
           jQuery('.overall-reports-response').html(response);
         },
         error: function(error){
+            console.log('error');
+            jQuery('.loader').hide();
             swal({
                 title: 'Error!',
-                text: response.data.message,
-                icon: response.data.status,
+                text: error.data.message,
+                icon: error.data.status,
                 button: 'Ok'
             });
         }

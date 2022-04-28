@@ -68,14 +68,12 @@ exports.getUsersTotalIncCount = function(data){
     let query = 'SELECT COUNT(id) as inc_count FROM users_monthly_in_ex WHERE user_id=? AND in_ex_type=?';
     conn.query(query, data, function(err, result){
       if (err) {
-        console.log('count reject')
         response.status = configObj.error.status;
         response.message = configObj.error.err1_message;
         //response.message = err;
         response.data = '';
         reject(response);
       } else {
-        console.log('count resolve')
         response.status = configObj.success.status;
         response.message = '';
         response.data = result[0].inc_count;
