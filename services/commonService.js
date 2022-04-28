@@ -1,4 +1,5 @@
 const commonModel = require('../models/commonModel');
+const configObj = require('../config/config')
 
 
 exports.checkUsername = function(userId=null, username, callback) {
@@ -70,4 +71,94 @@ exports.escapeHtml = function (text) {
     };
 
     return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+exports.balance = async function (data) {
+    try {
+        let response = await commonModel.getUsersBalanceCount(data);
+        if (parseInt(response.data) > 0 ) {
+            setTimeout(updateExistingBalanceEntry, 2000, data);
+        } else {
+            setTimeout(makeNewBalanceEntry, 2000, data);
+        }
+    } catch(Exception) {
+        //Exception
+    }
+}
+
+async function makeNewBalanceEntry(param) {
+    try{
+        //Get current balance
+        let balanceResult = await getBalance(param);
+        
+        if (param[5] === configObj.transaction_type.income) { //Update entry of income & balance column.
+            let _balance = parseFloat(balanceResult[2]) + parseFloat(param[7]);
+            let data = [
+                   param[0], param[1], param[2], param[3], param[7], _balance
+                ];
+
+            let query = 'INSERT INTO users_ine_balance(user_id, uis_id, ie_year, ie_month, income, balance) VALUES(?, ?, ?, ?, ?, ?)';
+            makeCalculation(query, data);
+            //if () {} //If refunded then update expense & balance column
+        } else {
+            let _balance = parseFloat(balanceResult[2]) - parseFloat(param[7]);
+            let data = [
+                   param[0], param[1], param[2], param[3], param[7], _balance
+                ];
+            let query = 'INSERT INTO users_ine_balance(user_id, uis_id, ie_year, ie_month, expense, balance) VALUES(?, ?, ?, ?, ?, ?)';
+            makeCalculation(query, data);   
+        }
+
+    }catch(Exception){
+        //Exception
+    }
+}
+
+async function updateExistingBalanceEntry(param) {
+    try{
+        let balanceResult = await getBalance(param);
+        
+        if (param[5] === configObj.transaction_type.expense) {
+            //Get current balance
+            let expense = parseFloat(balanceResult[1]) + parseFloat(param[7])
+            let _balance = parseFloat(balanceResult[2]) - parseFloat(param[7]);
+            let data = [
+                expense, _balance, param[0], param[1], param[2], param[3]
+            ];
+            
+            let query = 'UPDATE users_ine_balance SET expense=?, balance=? WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
+            makeCalculation(query, data);
+        } else {
+            //Get current balance
+            let income = parseFloat(balanceResult[0]) + parseFloat(param[7])
+            let _balance = parseFloat(balanceResult[2]) + parseFloat(param[7]);
+            let data = [
+                income, _balance, param[0], param[1], param[2], param[3]
+            ];
+            
+            let query = 'UPDATE users_ine_balance SET income=?, balance=? WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
+            makeCalculation(query, data);
+        }
+    }catch(Exception){
+        //Exception
+    }
+}
+
+async function getBalance(param){
+    let response = await commonModel.getUsersBalance(param);
+    let income = (response.data.length > 0) ? response.data[0] : 0;
+    let expense = (response.data.length > 0) ? response.data[1] : 0;
+    let balance = (response.data.length > 0) ? response.data[2] : 0;
+    let data = [
+        income, expense, balance
+    ];
+    return data;
+}
+
+function makeCalculation(query, data){
+    try{
+        commonModel.makeCalculation(query, data);
+    }catch(Exception){
+        //Exception
+    }
 }
