@@ -179,7 +179,7 @@ exports.getAutoShipReport = async function(userId, filterData) {
         let expected = configObj.vehical_earnings[key[1]];
 
         balance = parseFloat(totalInc) - parseFloat(totalExp);
-        pending = parseFloat(expected.month) - parseFloat(balance);
+        pending = parseFloat(expected.month) - parseFloat(totalInc);
         
         response = {
             status: 'success',
