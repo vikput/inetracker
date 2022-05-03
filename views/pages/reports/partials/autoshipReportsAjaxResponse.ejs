@@ -6,6 +6,15 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>Per/Day: </th>
+                    <td><%= reportsData.expected.day%></td>
+                    <th>Per/Week: </th>
+                    <td><%= reportsData.expected.week%></td>
+                    <th>Per/Month: </th>
+                    <td><%= reportsData.expected.month%></td>
+                </tr>
+                <tr>
+                    <th>#</th>
                     <th scope="col">Date</th>
                     <th scope="col">Income</th>
                     <th scope="col">Expense</th>
@@ -16,6 +25,7 @@
             <tbody>
             <% for(i=0;i<reportsData.data.length; i++) { %>	
                 <tr>
+                    <td></td>
                     <td><%= reportsData.data[i].date%></td>
                     <td><%= reportsData.data[i].income%></td>
                     <td><%= reportsData.data[i].expense%></td>
@@ -23,19 +33,22 @@
                     <td><%= reportsData.data[i].comments%></td>
                 </tr>
             <% } %>
+                
                 <tr>
-                    <th></th>
-                    <th>Total Income</th>
+                    <th>Income: </th>
                     <td><%= reportsData.totalInc%></td>
-                    <th>Total Expense</th>
+                    <th>Expense: </th>
                     <td><%= reportsData.totalExp%></td>
+                    <th>Balance: </th>
+                    <td><%= reportsData.balance%></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <th>Balance</th>
-                    <td><%= reportsData.balance%></td>
+                    <td></td>
+                    <th>Pending: </th>
+                    <td><%= reportsData.pending%></td>
                 </tr>
             </tbody>
         </table>

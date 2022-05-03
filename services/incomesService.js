@@ -1,7 +1,6 @@
 const incSModel = require('../models/incomeSourcesModel');
 const incModel = require('../models/incomesModel');
 const commonService = require('./commonService');
-const ff = require('../config/featureflag');
 
 /*
     Save users income sources data 
@@ -52,7 +51,7 @@ exports.getUsersTotalIncScount = async function(data){
 */
 exports._saveIncomes = async function(data){
     let response = await incModel.saveIncomes(data);
-    if (ff.ieImprovement && response.status === 'success') {
+    if (response.status === 'success') {
         setTimeout(commonService.balance, 2000, data);
     }
     return response;
