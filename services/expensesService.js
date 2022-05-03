@@ -1,10 +1,9 @@
 const expModel = require('../models/expensesModel');
 const commonService = require('./commonService');
-const ff = require('../config/featureflag');
 
 exports._saveData = async function(data){
 	let response = await expModel.saveData(data);
-    if (ff.ieImprovement && response.status === 'success') {
+    if (response.status === 'success') {
         setTimeout(commonService.balance, 2000, data);
     }
     return response;

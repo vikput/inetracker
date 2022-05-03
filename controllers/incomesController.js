@@ -42,7 +42,8 @@ async function saveData(userId, postData){
 			postData.indate,
 			configObj.transaction_type.income,
 			postData.comments,
-			parseFloat(postData.monthlyincome)
+			parseFloat(postData.monthlyincome),
+      ('refund' in postData)
 		]
 
 		response = await incService._saveIncomes(data)

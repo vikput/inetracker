@@ -1,5 +1,5 @@
 let ff = {
-	ieImprovement: true
+	ieImprovement: false
 }
 
 module.exports = ff;

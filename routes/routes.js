@@ -50,5 +50,7 @@ router.get('/report/detailed-report', isActive.isActive, reports_controller.deta
 router.post('/report/fetch-detailed-report', isActive.isActive, reports_controller.fetchDetailedReports);
 router.get('/report/overall-report', isActive.isActive, reports_controller.overAllReports);
 router.post('/report/fetch-overall-report', isActive.isActive, reports_controller.fetchOverAllReports);
+router.get('/report/auto-ship-report', isActive.isActive, reports_controller.autoShipReport);
+router.post('/report/fetch-auto-ship-report', isActive.isActive, reports_controller.fetchAutoShipReport);
 
 module.exports = router;

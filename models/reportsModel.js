@@ -138,7 +138,7 @@ exports.getStatement = function(userId, filterData){
     });
 }
 
-exports.fetchOverAllReports = function(userId, filterData, incsId) {
+exports.DeprecatedfetchOverAllReports = function(userId, filterData, incsId) {
 	return new Promise(function(resolve, reject){
         let dbObj = new mysqldb();
 		let conn = dbObj.connect();
@@ -192,4 +192,89 @@ exports.fetchOverAllReports = function(userId, filterData, incsId) {
 		});
 		conn.end();
 	});
+}
+
+exports.fetchOverAllReports = function(userId, filterData, incsId){
+    return new Promise(function(resolve, reject){
+        let dbObj = new mysqldb();
+		let conn = dbObj.connect();
+		conn.connect();
+
+		let response = {};
+        
+        let data = [
+           userId, incsId, filterData.year
+        ];
+
+        let selectColumns; 
+        if (filterData.month) {
+            selectColumns = 'income, expense, balance';
+        } else {
+            selectColumns = 'SUM(income) AS income, SUM(expense) AS expense, SUM(balance) AS balance';
+        }
+		
+		let query = 'SELECT '+selectColumns+' FROM users_ine_balance';
+		query += ' WHERE user_id=? AND uis_id=? AND ie_year=?';
+        if(filterData.month) {
+			data.push(filterData.month);
+			query +=' AND ie_month = ?';
+		}
+		
+		conn.query(query, data, function(err, result){
+		    if (err) {
+		        response.status = configObj.error.status;
+		        response.message = configObj.error.err1_message;
+		        //response.message = err;
+		        response.data = '';
+		        reject(response);
+		    } else {
+		        resolve(result);
+		    }
+		});
+		conn.end();
+    });
+}
+
+exports.getAutoShipReport = function(userId, filterData){
+	return new Promise(function(resolve, reject){
+		let dbObj = new mysqldb();
+		let conn = dbObj.connect();
+		conn.connect();
+
+		let response = {};
+
+		let data = [
+		    userId
+		];
+
+		let query = 'SELECT in_ex_date as date, in_ex_type AS type, in_ex_comment AS comments, in_ex_amount AS amount FROM users_monthly_in_ex WHERE user_id=?';
+		query += ' AND in_ex_comment like '+conn.escape('%'+filterData.vehical+'%')+'';
+
+		if(filterData.year && filterData.month) {
+			data.push(filterData.year);
+			data.push(filterData.month);
+			query +=' AND in_ex_year = ? AND in_ex_month = ?';
+		}
+
+		if(filterData.fromDate && filterData.toDate){
+		    data.push(filterData.fromDate);
+		    data.push(filterData.toDate);
+		    query +=' AND in_ex_date BETWEEN ? AND ?';
+		}
+
+		query += ' ORDER BY in_ex_date DESC';
+
+		conn.query(query, data, function(err, result){
+		    if (err) {
+		        response.status = configObj.error.status;
+		        response.message = configObj.error.err1_message;
+		        //response.message = err;
+		        response.data = '';
+		        reject(response);
+		    } else {
+		        resolve(result);
+		    }
+		});
+		conn.end();
+    });
 }

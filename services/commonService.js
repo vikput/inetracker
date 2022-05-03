@@ -90,16 +90,13 @@ async function makeNewBalanceEntry(param) {
     try{
         //Get current balance
         let balanceResult = await getBalance(param);
-        
         if (param[5] === configObj.transaction_type.income) { //Update entry of income & balance column.
             let _balance = parseFloat(balanceResult[2]) + parseFloat(param[7]);
             let data = [
                    param[0], param[1], param[2], param[3], param[7], _balance
                 ];
-
             let query = 'INSERT INTO users_ine_balance(user_id, uis_id, ie_year, ie_month, income, balance) VALUES(?, ?, ?, ?, ?, ?)';
             makeCalculation(query, data);
-            //if () {} //If refunded then update expense & balance column
         } else {
             let _balance = parseFloat(balanceResult[2]) - parseFloat(param[7]);
             let data = [
@@ -116,6 +113,7 @@ async function makeNewBalanceEntry(param) {
 
 async function updateExistingBalanceEntry(param) {
     try{
+        //Get current balance
         let balanceResult = await getBalance(param);
         
         if (param[5] === configObj.transaction_type.expense) {
@@ -129,15 +127,25 @@ async function updateExistingBalanceEntry(param) {
             let query = 'UPDATE users_ine_balance SET expense=?, balance=? WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
             makeCalculation(query, data);
         } else {
-            //Get current balance
-            let income = parseFloat(balanceResult[0]) + parseFloat(param[7])
-            let _balance = parseFloat(balanceResult[2]) + parseFloat(param[7]);
-            let data = [
-                income, _balance, param[0], param[1], param[2], param[3]
-            ];
+            if (param[8]) {//If refunded then update expense & balance column
+                let expense = parseFloat(balanceResult[1]) - parseFloat(param[7])
+                let _balance = parseFloat(balanceResult[2]) + parseFloat(param[7]);
+                let data = [
+                    expense, _balance, param[0], param[1], param[2], param[3]
+                ];
             
-            let query = 'UPDATE users_ine_balance SET income=?, balance=? WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
-            makeCalculation(query, data);
+                let query = 'UPDATE users_ine_balance SET expense=?, balance=? WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
+                makeCalculation(query, data);
+            } else {
+                let income = parseFloat(balanceResult[0]) + parseFloat(param[7])
+                let _balance = parseFloat(balanceResult[2]) + parseFloat(param[7]);
+                let data = [
+                    income, _balance, param[0], param[1], param[2], param[3]
+                ];
+              
+                let query = 'UPDATE users_ine_balance SET income=?, balance=? WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
+                makeCalculation(query, data);
+            }
         }
     }catch(Exception){
         //Exception

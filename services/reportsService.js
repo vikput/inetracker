@@ -2,6 +2,7 @@ const incSModel = require('../models/incomeSourcesModel');
 const reportsModel = require('../models/reportsModel');
 const commonService = require('./commonService');
 const configObj = require('../config/config');
+const ff = require('../config/featureflag');
 
 exports.getDetailedReports = async function(userId, filterData){
 	try {
@@ -81,12 +82,13 @@ exports.getStatement = async function(userId, filterData){
 
             reportData.push({
                 'date': commonService.formatDate(usersStatement[i].date),
-                'type': usersStatement[i].type,
+                'income': (usersStatement[i].type === configObj.transaction_type.income) ? usersStatement[i].type : '-',
+                'expense': (usersStatement[i].type === configObj.transaction_type.expense) ? usersStatement[i].type : '-',
                 'amount': parseFloat(usersStatement[i].amount).toLocaleString('en-IN'),
                 'comments': usersStatement[i].comments, 
             });
         }
-
+        
         response = {
             status: 'success',
             message: '',
@@ -115,9 +117,9 @@ exports.fetchOverAllReports = async function(userId, filterData, incomeSources) 
             overAllReports = await reportsModel.fetchOverAllReports(userId, filterData, incomeSources[i].id);
             var income=0; var expense=0; var _balance=0;
             for(let j=0; j<overAllReports.length; j++) {
-                income = (overAllReports[j].overall_income) ? overAllReports[j].overall_income : 0;
-                expense = (overAllReports[j].overall_expense) ? overAllReports[j].overall_expense : 0;
-                _balance = parseFloat(income) - parseFloat(expense); 
+                income = (overAllReports[j].income) ? overAllReports[j].income : 0;
+                expense = (overAllReports[j].expense) ? overAllReports[j].expense : 0;
+                _balance = (overAllReports[j].balance) ? overAllReports[j].balance : 0; 
                 totalInc += parseFloat(income);
                 totalExp += parseFloat(expense);
             }
@@ -147,4 +149,56 @@ exports.fetchOverAllReports = async function(userId, filterData, incomeSources) 
         };
         return response;
     }    
+}
+
+exports.getAutoShipReport = async function(userId, filterData) {
+    try {
+        autoShipReport = await reportsModel.getAutoShipReport(userId, filterData);
+        let reportData = [];
+        let totalInc = 0; let totalExp = 0; let balance = 0; let pending = 0;
+        for (let i=0; i<autoShipReport.length; i++) {
+            
+            if (autoShipReport[i].type === configObj.transaction_type.income) {
+                totalInc += parseFloat(autoShipReport[i].amount);  
+            }
+
+            if (autoShipReport[i].type === configObj.transaction_type.expense) {
+                totalExp += parseFloat(autoShipReport[i].amount);  
+            }
+
+            reportData.push({
+                'date': commonService.formatDate(autoShipReport[i].date),
+                'income': (autoShipReport[i].type === configObj.transaction_type.income) ? autoShipReport[i].type : '-',
+                'expense': (autoShipReport[i].type === configObj.transaction_type.expense) ? autoShipReport[i].type : '-',
+                'amount': parseFloat(autoShipReport[i].amount).toLocaleString('en-IN'),
+                'comments': autoShipReport[i].comments, 
+            });
+        }
+
+        let key = filterData.vehical.split('MH-');
+        let expected = configObj.vehical_earnings[key[1]];
+
+        balance = parseFloat(totalInc) - parseFloat(totalExp);
+        pending = parseFloat(expected.month) - parseFloat(balance);
+        
+        response = {
+            status: 'success',
+            message: '',
+            data: reportData,
+            totalInc: totalInc.toLocaleString('en-IN'),
+            totalExp: totalExp.toLocaleString('en-IN'),
+            balance: (balance).toLocaleString('en-IN'),
+            pending: (pending).toLocaleString('en-IN'),
+            expected: expected
+        };
+
+        return response;
+    } catch(Exception) {
+        response = {
+            status: configObj.error.status,
+            message: configObj.error.err1_message,
+            data: ''
+        };
+        return response;
+    }
 }
