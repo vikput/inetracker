@@ -1,16 +1,12 @@
-const mysqldb = require('../config/mysqldb')
 const configObj = require('../config/config')
 
 exports.checkUsername = function(userId=null, userName, callback){
-    let dbObj = new mysqldb();
-    let conn = dbObj.connect();
-    conn.connect();
     let response = {};
     let query = 'SELECT COUNT(username) AS u_count FROM users WHERE username=?';
     if (userId) {
         query += ' AND id!=?';
     }
-    conn.query(query, userName, function(err, result){
+    connectDB.query(query, userName, function(err, result){
     	if (err) {
     		response.status = configObj.error.status;
             response.message = configObj.error.err1_message;
@@ -30,14 +26,11 @@ exports.checkUsername = function(userId=null, userName, callback){
     		return callback(response);
     	}
     });
-    conn.end();
+    //conn.end();
 }
 
 exports.getUsersBalanceCount = function(params){
   return new Promise(function(resolve, reject){
-    let dbObj = new mysqldb();
-    let conn = dbObj.connect();
-    conn.connect();
     let response = {};
 
     let data = [
@@ -48,7 +41,7 @@ exports.getUsersBalanceCount = function(params){
     ];
     
     let query = 'SELECT COUNT(id) as balance_count FROM users_ine_balance WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
-    conn.query(query, data, function(err, result){
+    connectDB.query(query, data, function(err, result){
       if (err) {
         response.status = configObj.error.status;
         response.message = configObj.error.err1_message;
@@ -62,15 +55,12 @@ exports.getUsersBalanceCount = function(params){
         resolve(response);
       }
     });
-    conn.end();
+    //conn.end();
   });
 }
 
 exports.getUsersBalance = function(params){  
   return new Promise(function(resolve, reject){
-    let dbObj = new mysqldb();
-    let conn = dbObj.connect();
-    conn.connect();
     let response = {};
     let data = [
         params[0],
@@ -80,7 +70,7 @@ exports.getUsersBalance = function(params){
     ];
     
     let query = 'SELECT income, expense, balance FROM users_ine_balance WHERE user_id=? AND uis_id=? AND ie_year=? AND ie_month=?';
-    conn.query(query, data, function(err, result){
+    connectDB.query(query, data, function(err, result){
       if (err) {
         response.status = configObj.error.status;
         response.message = configObj.error.err1_message;
@@ -94,20 +84,17 @@ exports.getUsersBalance = function(params){
         resolve(response);
       }
     });
-    conn.end();
+    //conn.end();
   });
 }
 
 exports.makeCalculation = function(query, data){
-    let dbObj = new mysqldb();
-    let conn = dbObj.connect();
-    conn.connect();
-    conn.query(query, data, function(err, res){
-        if (err) {
-            //Query execution failed.
-        } else {
-            //Query execution passed.
-        }
-    });
-    conn.end();
+  connectDB.query(query, data, function(err, res){
+      if (err) {
+          //Query execution failed.
+      } else {
+          //Query execution passed.
+      }
+  });
+  //conn.end();
 }

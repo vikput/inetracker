@@ -1,15 +1,10 @@
-const mysqldb = require('../config/mysqldb')
-const configObj = require('../config/config')
-
+const configObj = require('../config/config');
 
 exports.getUsersAuthDetails = function(userName, callback) {
-	let dbObj = new mysqldb();
-    let conn = dbObj.connect();
-    conn.connect();
     let response = {};
     let query = 'SELECT id, username, password FROM users WHERE username=?';
 
-    conn.query(query, userName, function(err, result){
+    connectDB.query(query, userName, function(err, result){
     	if (err) {
     		response.status = configObj.error.status;
             //response.message = configObj.error.err1_message;
@@ -23,5 +18,5 @@ exports.getUsersAuthDetails = function(userName, callback) {
     		return callback(response);
     	}
     });
-    conn.end();
+    //conn.end();
 }
