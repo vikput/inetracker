@@ -30,10 +30,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Intialize session
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
-	secret: process.env.SESSION_SECRET,
+	secret: process.env.SESSION_SECRET, //Random unique string used to authenticate session.
 	saveUninitialized: true,
   cookie: { maxAge: oneDay }, //Set cookie expiration time one day
-  resave: false,
+  resave: false
 }));
 
 //CSRF protection middleware.
