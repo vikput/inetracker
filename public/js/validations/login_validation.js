@@ -47,7 +47,7 @@ jQuery('#login-form').validate({
           error : function(error){
             swal({
               title: 'Error!',
-              text: 'Something went wrong, please try again later.',
+              text: error.responseText,
               icon: 'error',
               button: 'Ok'
             });

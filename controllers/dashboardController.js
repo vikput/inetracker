@@ -13,7 +13,8 @@ exports.test = function(req, res) {
 }
 
 exports.logout = function(req, res) {
-	req.session.destroy();
-	req.session = null;
-	res.redirect('/login');
+    req.session.destroy(function (err) {
+        res.redirect('/login'); //Inside a callback… bulletproof!
+        //res.clearCookie('connect.sid', {path: '/'}).end();
+    });
 }
