@@ -51,7 +51,7 @@ exports.getUsersIncomeSourcesListView = function(data, start, limit, search, sor
                    data.push(value);
                 }
                 for (let key of Object.keys(search[i])) {
-                    query +=' AND '+key+' LIKE '+conn.escape('%'+data[1]+'%')+'';
+                    query +=' AND '+key+' LIKE '+connectDB.escape('%'+data[1]+'%')+'';
                 }
         	}
         }
