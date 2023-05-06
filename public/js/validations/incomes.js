@@ -57,7 +57,7 @@ jQuery('#income-sources').validate({
             error : function(error){
               swal({
                 title: 'Error!',
-                text: 'Something went wrong, please try again later.',
+                text: error.responseText,
                 icon: 'error',
                 button: 'Ok'
               });
@@ -74,7 +74,7 @@ jQuery('#income-sources').validate({
       },function(error){
         swal({
           title: 'Error!',
-          text: 'Something went wrong, please try again later.',
+          text: error.responseText,
           icon: 'error',
           button: 'Ok'
         });
@@ -180,7 +180,7 @@ jQuery('#form-incomes').validate({
           error : function(error){
             swal({
               title: 'Error!',
-              text: 'Something went wrong, please try again later.',
+              text: error.responseText,
               icon: 'error',
               button: 'Ok'
             });

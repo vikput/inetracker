@@ -28,11 +28,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Intialize session
-const oneDay = 1000 * 60 * 60 * 24;
+const _maxAge = 60 * 60 * 1000; //One hour
 app.use(session({
 	secret: process.env.SESSION_SECRET, //Random unique string used to authenticate session.
 	saveUninitialized: true,
-  cookie: { maxAge: oneDay }, //Set cookie expiration time one day
+  cookie: { maxAge: _maxAge }, //Set cookie expiration time one day
   resave: false
 }));
 
@@ -42,7 +42,7 @@ app.use(csrf());
 app.use(function (err, req, res, next) {
   if (err.code !== 'EBADCSRFTOKEN') return next(err)
   // handle CSRF token errors here
-  res.status(403);
+  res.status(400);
   res.send('There was some issue with this request, please refresh the page and try again.');
 });
 
