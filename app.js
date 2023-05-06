@@ -4,11 +4,16 @@ const bodyParser = require('body-parser');//BodyParser
 require('dotenv').config()//Read .env file properties
 const session = require('express-session');//Session
 const csrf = require('csurf');//CSRF
+const mysqldb = require('./config/mysqldb');//Mysql db connection
 
 const app = express()//Create instance of express class
 
 //Custom packages
 
+//Make database connection global
+let dbObj = new mysqldb();
+let conn = dbObj.connect();
+global.connectDB = conn;
 
 //Set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -23,10 +28,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Intialize session
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
-	secret: 'ine-tracker',
-	resave: false,
-	saveUninitialized: true
+	secret: process.env.SESSION_SECRET,
+	saveUninitialized: true,
+  cookie: { maxAge: oneDay }, //Set cookie expiration time one day
+  resave: false,
 }));
 
 //CSRF protection middleware.
@@ -42,12 +49,6 @@ app.use(function (err, req, res, next) {
 //Include routes and register them in app context
 const routes = require('./routes/routes.js');
 app.use('/', routes);
-
-
-//Test route
-/*app.get('/hello_world', function (req, res) {
-  res.send('Hello World')
-})*/
 
 module.exports = app;
 

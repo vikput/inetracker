@@ -11,6 +11,10 @@ const incomes_controller = require('../controllers/incomesController');
 const expenses_controller = require('../controllers/expensesController');
 const reports_controller = require('../controllers/reportsController');
 
+//Health check
+router.get('/health-check', function(req, res){
+    res.send('I am good');
+});
 
 //Registration routes
 router.get('/', isActive.isNotActive, registration_controller.index);

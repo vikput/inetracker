@@ -121,7 +121,8 @@ exports.getStatement = function(userId, filterData){
 		    query +=' AND ie.in_ex_date BETWEEN ? AND ?';
 		}
 
-		query += ' ORDER BY ie.in_ex_month, ie.in_ex_date DESC';
+		//query += ' ORDER BY ie.in_ex_month, ie.in_ex_date DESC';
+		query += ' ORDER BY ie.id DESC';
 
 		conn.query(query, data, function(err, result){
 		    if (err) {
@@ -262,7 +263,7 @@ exports.getAutoShipReport = function(userId, filterData){
 		    query +=' AND in_ex_date BETWEEN ? AND ?';
 		}
 
-		query += ' ORDER BY in_ex_date DESC';
+		query += ' ORDER BY id DESC';
 
 		conn.query(query, data, function(err, result){
 		    if (err) {

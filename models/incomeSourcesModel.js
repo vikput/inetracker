@@ -1,13 +1,9 @@
-const mysqldb = require('../config/mysqldb')
 const configObj = require('../config/config')
 
 exports.saveData = function(incomeSourceData){
 	return new Promise(function(resolve, reject){
-	    let dbObj = new mysqldb();
-	    let conn = dbObj.connect();
 	    let response = {};
-	    conn.connect();
-	    conn.query('INSERT INTO users_income_sources(user_id, users_income_sources, anuall_amount) VALUES(?, ?, ?)', incomeSourceData, function(err, res){
+	    connectDB.query('INSERT INTO users_income_sources(user_id, users_income_sources, anuall_amount) VALUES(?, ?, ?)', incomeSourceData, function(err, res){
 	        if (err) {
 	            response.status = configObj.error.status;
 	            response.message = configObj.error.err1_message;
@@ -21,18 +17,15 @@ exports.saveData = function(incomeSourceData){
 	            resolve(response);
 	        }
 	    });
-	    conn.end();
+	    //conn.end();
 	});
 }
 
 exports.getUsersIncomeSources = function(data){
 	return new Promise(function(resolve, reject){
-	    let dbObj = new mysqldb();
-        let conn = dbObj.connect();
-        conn.connect();
         let response = {};
         let query = 'SELECT id, users_income_sources FROM users_income_sources WHERE user_id=?';
-	    conn.query(query, data, function(err, result){
+	    connectDB.query(query, data, function(err, result){
 	    	if (err) {
 	    		response.status = configObj.error.status;
 	            response.message = configObj.error.err1_message;
@@ -43,15 +36,12 @@ exports.getUsersIncomeSources = function(data){
 	    		resolve(result);
 	    	}
 	    });
-	    conn.end();
+	    //conn.end();
 	});
 }
 
 exports.getUsersIncomeSourcesListView = function(data, start, limit, search, sortBy, orderBy){
 	return new Promise(function(resolve, reject){
-	    let dbObj = new mysqldb();
-        let conn = dbObj.connect();
-        conn.connect();
 		let orderByArray = ['users_income_sources'];
         let response = {};
         let query = 'SELECT id, users_income_sources FROM users_income_sources WHERE user_id=?';
@@ -68,7 +58,7 @@ exports.getUsersIncomeSourcesListView = function(data, start, limit, search, sor
 
         query += ' ORDER BY '+orderByArray[sortBy]+' '+orderBy;
         //query += ' LIMIT '+limit+','+start; 
-	    conn.query(query, data, function(err, result){
+	    connectDB.query(query, data, function(err, result){
 	    	if (err) {
 	    		response.status = configObj.error.status;
 	            response.message = configObj.error.err1_message;
@@ -79,18 +69,15 @@ exports.getUsersIncomeSourcesListView = function(data, start, limit, search, sor
 	    		resolve(result);
 	    	}
 	    });
-	    conn.end();
+	    //conn.end();
 	});
 }
 
 exports.checkIncomeSource = function(data){
 	return new Promise(function(resolve, reject){
-		let dbObj = new mysqldb();
-        let conn = dbObj.connect();
-        conn.connect();
         let response = {};
         let query = 'SELECT COUNT(id) as incs_count FROM users_income_sources WHERE user_id=? AND users_income_sources LIKE N?';
-        conn.query(query, data, function(err, result){
+        connectDB.query(query, data, function(err, result){
         	if (err) {
                 response.status = configObj.error.status;
 	            response.message = configObj.error.err1_message;
@@ -109,18 +96,15 @@ exports.checkIncomeSource = function(data){
                 resolve(response);
         	}
         });
-        conn.end();
+        //conn.end();
 	});
 }
 
 exports.getUsersTotalIncScount = function(data){
 	return new Promise(function(resolve, reject){
-		let dbObj = new mysqldb();
-        let conn = dbObj.connect();
-        conn.connect();
         let response = {};
         let query = 'SELECT COUNT(id) as incs_count FROM users_income_sources WHERE user_id=?';
-        conn.query(query, data, function(err, result){
+        connectDB.query(query, data, function(err, result){
         	if (err) {
                 response.status = configObj.error.status;
 	            response.message = configObj.error.err1_message;
@@ -134,6 +118,6 @@ exports.getUsersTotalIncScount = function(data){
                 resolve(response);
         	}
         });
-        conn.end();
+        //conn.end();
 	});
 }
