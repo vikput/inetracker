@@ -69,7 +69,7 @@ exports.fetchIncomeSources = async function(req, res){
     let data = await getUsersIncomeSourcesListView(userId, start, limit, search, sortBy, orderBy);
     let recordsTotal = await incService.getUsersTotalIncScount([userId]);
     let recordsFiltered = data.length;
-	response = {
+	let response = {
 	    "draw" : req.query.draw, 
 	    "recordsTotal": parseInt(recordsTotal), 
 	    "recordsFiltered": parseInt(recordsFiltered), 
@@ -84,8 +84,8 @@ getUsersIncomeSourcesListView = async function(userId, start, limit, search, sor
 			userId
 		];
 
-		response = await incService.getUsersIncomeSourcesListView(data, start, limit, search, sortBy, orderBy);
-	    return response;
+		let response = await incService.getUsersIncomeSourcesListView(data, start, limit, search, sortBy, orderBy);
+		return response;
 	}catch (Exception){
         return Exception;
 	}

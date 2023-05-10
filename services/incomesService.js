@@ -27,8 +27,8 @@ exports.checkIncomeSource = async function(data){
    Income sources list view
 */
 exports.getUsersIncomeSourcesListView = async function(data, start, limit, search, sortBy, orderBy){
-    results = await incSModel.getUsersIncomeSourcesListView(data, start, limit, search, sortBy, orderBy);
-    incSourceData = [];
+    let results = await incSModel.getUsersIncomeSourcesListView(data, start, limit, search, sortBy, orderBy);
+    let incSourceData = [];
     for(let i=0; i<results.length; i++){
         incSourceData.push({
             'income_sources': commonService.escapeHtml(results[i].users_income_sources),
@@ -70,7 +70,6 @@ exports.getUsersTotalIncCount = async function(data){
 */
 exports.fetchUsersIncomes = async function(data, start, limit, sortByArr, orderByArr){
     results = await incModel.fetchUsersIncomes(data, start, limit, sortByArr, orderByArr);
-    console.log(results);
     incomes = [];
     for (let i=0; i<results.length; i++){
         incomes.push({
