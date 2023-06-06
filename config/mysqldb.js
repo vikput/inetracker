@@ -6,18 +6,24 @@ class dbConnect{
         this.user = process.env.DB_USER;
         this.password = process.env.DB_PASSWORD;
         this.database = process.env.DB_DATABASE;
+        return this.connect();
     }
 
-    connect(){
-        let connection = mysql.createConnection({
+    async makeConnection(){    
+        let connection = await mysql.createConnection({
           host     : this.host,
           user     : this.user,
           password : this.password,
           database : this.database
         });
-
+        //console.log(connection);
         return connection;
     }
+
+    async connect(){
+        return await this.makeConnection();
+    }
+
 }
 
 module.exports = dbConnect;
