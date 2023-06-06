@@ -1,11 +1,10 @@
-const mysqldb = require('../config/mysqldb');
 const configObj = require('../config/config');
 
 exports.getIncomes = function(userId, filterData){
 	return new Promise(function(resolve, reject){
-		let dbObj = new mysqldb();
+		/*let dbObj = new mysqldb();
 		let conn = dbObj.connect();
-		conn.connect();
+		conn.connect();*/
 
 		let response = {};
 		let query = 'SELECT inc.id AS id, inc.in_year AS `year`, inc.in_month AS `month`, inc.in_date AS `in_date`, inc.income AS amount, inc.in_comment AS comments, incs.users_income_sources AS income_sources FROM users_monthly_income AS inc, users_income_sources AS incs';
@@ -31,7 +30,7 @@ exports.getIncomes = function(userId, filterData){
 
 		query += ' ORDER BY inc.in_ex_month ASC';
 
-		conn.query(query, data, function(err, result){
+		connectDB.query(query, data, function(err, result){
 		    if (err) {
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
@@ -42,16 +41,16 @@ exports.getIncomes = function(userId, filterData){
 		        resolve(result);
 		    }
 		});
-		conn.end();
+		//conn.end();
   });
 }
 
 
 exports.getExpenses = function(userId, filterData){
 	return new Promise(function(resolve, reject){
-		let dbObj = new mysqldb();
+		/*let dbObj = new mysqldb();
 		let conn = dbObj.connect();
-		conn.connect();
+		conn.connect();*/
 
 		let response = {};
 		let query = 'SELECT ex.id AS id, ex.ex_year AS `year`, ex.ex_month AS `month`, ex.ex_date AS `ex_date`, ex.ex_amount AS amount, ex.ex_comment AS comments, incs.users_income_sources AS income_sources FROM users_monthly_expenses AS ex, users_income_sources AS incs';
@@ -77,7 +76,7 @@ exports.getExpenses = function(userId, filterData){
 
 		query += ' ORDER BY ex.ex_month ASC';
 
-		conn.query(query, data, function(err, result){
+		connectDB.query(query, data, function(err, result){
 		    if (err) {
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
@@ -88,15 +87,15 @@ exports.getExpenses = function(userId, filterData){
 		        resolve(result);
 		    }
 		});
-		conn.end();
+		//conn.end();
   });
 }
 
 exports.getStatement = function(userId, filterData){
 	return new Promise(function(resolve, reject){
-		let dbObj = new mysqldb();
+		/*let dbObj = new mysqldb();
 		let conn = dbObj.connect();
-		conn.connect();
+		conn.connect();*/
 
 		let response = {};
 
@@ -124,7 +123,7 @@ exports.getStatement = function(userId, filterData){
 		//query += ' ORDER BY ie.in_ex_month, ie.in_ex_date DESC';
 		query += ' ORDER BY ie.id DESC';
 
-		conn.query(query, data, function(err, result){
+		connectDB.query(query, data, function(err, result){
 		    if (err) {
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
@@ -135,15 +134,15 @@ exports.getStatement = function(userId, filterData){
 		        resolve(result);
 		    }
 		});
-		conn.end();
+		//conn.end();
     });
 }
 
 exports.DeprecatedfetchOverAllReports = function(userId, filterData, incsId) {
 	return new Promise(function(resolve, reject){
-        let dbObj = new mysqldb();
+        /*let dbObj = new mysqldb();
 		let conn = dbObj.connect();
-		conn.connect();
+		conn.connect();*/
 
 		let response = {};
 
@@ -180,7 +179,7 @@ exports.DeprecatedfetchOverAllReports = function(userId, filterData, incsId) {
 		    incsId
 		];*/
 
-		conn.query(query, function(err, result){
+		connectDB.query(query, function(err, result){
 		    if (err) {
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
@@ -197,9 +196,9 @@ exports.DeprecatedfetchOverAllReports = function(userId, filterData, incsId) {
 
 exports.fetchOverAllReports = function(userId, filterData, incsId){
     return new Promise(function(resolve, reject){
-        let dbObj = new mysqldb();
+        /*let dbObj = new mysqldb();
 		let conn = dbObj.connect();
-		conn.connect();
+		conn.connect();*/
 
 		let response = {};
         
@@ -221,7 +220,7 @@ exports.fetchOverAllReports = function(userId, filterData, incsId){
 			query +=' AND ie_month = ?';
 		}
 		
-		conn.query(query, data, function(err, result){
+		connectDB.query(query, data, function(err, result){
 		    if (err) {
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
@@ -232,15 +231,15 @@ exports.fetchOverAllReports = function(userId, filterData, incsId){
 		        resolve(result);
 		    }
 		});
-		conn.end();
+		//conn.end();
     });
 }
 
 exports.getAutoShipReport = function(userId, filterData){
 	return new Promise(function(resolve, reject){
-		let dbObj = new mysqldb();
+		/*let dbObj = new mysqldb();
 		let conn = dbObj.connect();
-		conn.connect();
+		conn.connect();*/
 
 		let response = {};
 
@@ -265,7 +264,7 @@ exports.getAutoShipReport = function(userId, filterData){
 
 		query += ' ORDER BY id DESC';
 
-		conn.query(query, data, function(err, result){
+		connectDB.query(query, data, function(err, result){
 		    if (err) {
 		        response.status = configObj.error.status;
 		        response.message = configObj.error.err1_message;
@@ -276,6 +275,6 @@ exports.getAutoShipReport = function(userId, filterData){
 		        resolve(result);
 		    }
 		});
-		conn.end();
+		//conn.end();
     });
 }

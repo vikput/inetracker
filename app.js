@@ -11,9 +11,15 @@ const app = express()//Create instance of express class
 //Custom packages
 
 //Make database connection global
-let dbObj = new mysqldb();
-let conn = dbObj.connect();
-global.connectDB = conn;
+global.connectDB = '';
+let conn = new mysqldb();
+conn.then(function(connection){
+  global.connectDB = connection;
+}).catch(function(error){
+  console.error('unable to connect database');  
+})
+//let conn = dbObj.connect();
+
 
 //Set the view engine to ejs
 app.set('view engine', 'ejs');
